@@ -2,6 +2,17 @@
 
 *minimalistic web extensions to fill in the gaps*
 
+## Packages
+
+### minimal
+
+```html
+<script type="module" src="https://datadink.github.io/webtini/minimal.js"></script>
+```
+* url: [https://datadink.github.io/webtini/minimal.js](https://datadink.github.io/webtini/minimal.js)
+
+## Modules
+
 ### Element.prototype.bind
 
 ```html
