@@ -1,46 +1,8 @@
-  /* 
-   * @class View - Provides data binding for DOM elements
-   * @description
-   *   Extends the Element prototype with a `bind` method.
-   *   Used to bind data to an element and all of its children.
-   *   The element and its children are scanned for attributes that begin with `bind-`
-   *   followed by a property name or dash(-) separated path on the element. 
-   *   The attribute is given a property name or dot(.) separated path on the data.
-   *   The property on the data is set to the value of the attribute on the element.
-   *   The element must be re-bound if the data changes.
-   *   The `bind` attribute can be used to change the data source for a subtree.
-   *   NOTE: property names are treated with case-insensitivity.
-   * @example
-   *   The following HTML:
-   *   ```html
-   *   <h1 bind-textContent="person.info.name"></h1>
-   *   <ul bind="person.info">
-   *     <li bind-textContent="age"></li>
-   *     <li bind-textContent="height"></li>
-   *   </ul>
-   *   ```
-   *   When bound to the following data:
-   *   ```js
-   *   document.body.bind({
-   *     person: {
-   *       info: {
-   *         name: 'John Doe',
-   *         age: 42,
-   *         height: '6\' 2"'
-   *       }
-   *     }
-   *   });
-   *   ```
-   *   Would render as:
-   *   ```html
-   *   <h1 bind-textContent="person.info.name">John Doe</h1>
-   *   <ul bind="person.info">
-   *     <li bind-textContent="age">42</li>
-   *     <li bind-textContent="height">6' 2"</li>
-   *   </ul>
-   *   ```
-   */
-  export default class View {
+/*
+ * @Author: Greenwald
+ * @Documentation: https://datadink.github.io/webtini/src/Element.prototype.bind
+ */
+export default class View {
   static #scope = Symbol('view');
   static #attr = 'bind';
   static #prefix = 'bind-';
