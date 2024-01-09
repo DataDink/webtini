@@ -65,7 +65,7 @@ It's sort of a loosely related collection of extensions that exist until a W3C s
 ```html
 <script type="module" src="https://datadink.github.io/webtini/src/Element.prototype.bind.js"></script>
 ```
-* docs: [https://datadink.github.io/webtini/docs/Element.prototype.bind.md](https://datadink.github.io/webtini/docs/Element.prototype.bind.md)
+* docs: [https://DataDink/webtini/blob/main/docs/Element.prototype.bind.md](https://DataDink/webtini/blob/main/docs/Element.prototype.bind.md)
 * url: [https://datadink.github.io/webtini/src/Element.prototype.bind.js](https://datadink.github.io/webtini/src/Element.prototype.bind.js)
 
 ### HTMLDataTemplateElement
@@ -73,7 +73,7 @@ It's sort of a loosely related collection of extensions that exist until a W3C s
 ```html
 <script type="module" src="https://datadink.github.io/webtini/src/HTMLDataTemplateElement.js"></script>
 ```
-* docs: [https://datadink.github.io/webtini/docs/HTMLDataTemplateElement.md](https://datadink.github.io/webtini/docs/HTMLDataTemplateElement.md)
+* docs: [https://DataDink/webtini/blob/main/docs/HTMLDataTemplateElement.md](https://DataDink/webtini/blob/main/docs/HTMLDataTemplateElement.md)
 * url: [https://datadink.github.io/webtini/src/HTMLDataTemplateElement.js](https://datadink.github.io/webtini/src/HTMLDataTemplateElement.js)
 
 ### DOMTokenList.prototype.tokens.js
@@ -81,7 +81,7 @@ It's sort of a loosely related collection of extensions that exist until a W3C s
 ```html
 <script type="module" src="https://datadink.github.io/webtini/src/DOMTokenList.prototype.tokens.js"></script>
 ```
-* docs: [https://datadink.github.io/webtini/docs/DOMTokenList.prototype.tokens.md](https://datadink.github.io/webtini/docs/DOMTokenList.prototype.tokens.md)
+* docs: [https://DataDink/webtini/blob/main/docs/DOMTokenList.prototype.tokens.md](https://DataDink/webtini/blob/main/docs/DOMTokenList.prototype.tokens.md)
 * url: [https://datadink.github.io/webtini/src/DOMTokenList.prototype.tokens.js](https://datadink.github.io/webtini/src/DOMTokenList.prototype.tokens.js)
 
 ### NamedNodeMap.prototype.tokens.js
@@ -89,6 +89,6 @@ It's sort of a loosely related collection of extensions that exist until a W3C s
 ```html
 <script type="module" src="https://datadink.github.io/webtini/src/NamedNodeMap.prototype.tokens.js"></script>
 ```
-* docs: [https://datadink.github.io/webtini/docs/NamedNodeMap.prototype.tokens.md](https://datadink.github.io/webtini/docs/NamedNodeMap.prototype.tokens.md)
+* docs: [https://DataDink/webtini/blob/main/docs/NamedNodeMap.prototype.tokens.md](https://DataDink/webtini/blob/main/docs/NamedNodeMap.prototype.tokens.md)
 * url: [https://datadink.github.io/webtini/src/NamedNodeMap.prototype.tokens.js](https://datadink.github.io/webtini/src/NamedNodeMap.prototype.tokens.js)
 
