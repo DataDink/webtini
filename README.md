@@ -14,6 +14,8 @@ It's sort of a loosely related collection of extensions that exist until a W3C s
 > ![WARNING]
 > Nothing is fully documented or tested yet. Use at your own risk.
 
+* Do you like this? [Contributions Welcome](./community/README.md)
+
 ## Quick Start
 ```html
 <html>
@@ -47,6 +49,11 @@ It's sort of a loosely related collection of extensions that exist until a W3C s
 
 ## Packages
 
+*link these for general sets of functionality vs linking each module*
+
+> ![NOTE]
+> These are dev/debug links only. This repository is not a CDN.
+
 ### minimal
 
 ```html
@@ -63,12 +70,18 @@ It's sort of a loosely related collection of extensions that exist until a W3C s
 
 ## Modules
 
+*link these individually to pick-and-choose functionality*
+
+> ![NOTE]
+> These are dev/debug links only. This repository is not a CDN.
+
 ### Element.prototype.bind
 
 ```html
 <script type="module" src="https://datadink.github.io/webtini/src/Element.prototype.bind.js"></script>
 ```
-* docs: [https://github.com/DataDink/webtini/blob/main/docs/Element.prototype.bind.md](https://github.com/DataDink/webtini/blob/main/docs/Element.prototype.bind.md)
+* source: [https://github.com/DataDink/webtini/blob/main/src/Element.prototype.bind.js](./src/Element.prototype.bind.js)
+* docs: [https://github.com/DataDink/webtini/blob/main/docs/Element.prototype.bind.md](./docs/Element.prototype.bind.md)
 * url: [https://datadink.github.io/webtini/src/Element.prototype.bind.js](https://datadink.github.io/webtini/src/Element.prototype.bind.js)
 
 ### HTMLDataTemplateElement
@@ -76,7 +89,8 @@ It's sort of a loosely related collection of extensions that exist until a W3C s
 ```html
 <script type="module" src="https://datadink.github.io/webtini/src/HTMLDataTemplateElement.js"></script>
 ```
-* docs: [https://github.com/DataDink/webtini/blob/main/docs/HTMLDataTemplateElement.md](https://github.com/DataDink/webtini/blob/main/docs/HTMLDataTemplateElement.md)
+* source: [https://github.com/DataDink/webtini/blob/main/src/HTMLDataTemplateElement.js](./src/HTMLDataTemplateElement.js)
+* docs: [https://github.com/DataDink/webtini/blob/main/docs/HTMLDataTemplateElement.md](./docs/HTMLDataTemplateElement.md)
 * url: [https://datadink.github.io/webtini/src/HTMLDataTemplateElement.js](https://datadink.github.io/webtini/src/HTMLDataTemplateElement.js)
 
 ### DOMTokenList.prototype.tokens.js
@@ -84,7 +98,8 @@ It's sort of a loosely related collection of extensions that exist until a W3C s
 ```html
 <script type="module" src="https://datadink.github.io/webtini/src/DOMTokenList.prototype.tokens.js"></script>
 ```
-* docs: [https://github.com/DataDink/webtini/blob/main/docs/DOMTokenList.prototype.tokens.md](https://github.com/DataDink/webtini/blob/main/docs/DOMTokenList.prototype.tokens.md)
+* source: [https://github.com/DataDink/webtini/blob/main/src/DOMTokenList.prototype.tokens.js](./src/DOMTokenList.prototype.tokens.js)
+* docs: [https://github.com/DataDink/webtini/blob/main/docs/DOMTokenList.prototype.tokens.md](./docs/DOMTokenList.prototype.tokens.md)
 * url: [https://datadink.github.io/webtini/src/DOMTokenList.prototype.tokens.js](https://datadink.github.io/webtini/src/DOMTokenList.prototype.tokens.js)
 
 ### NamedNodeMap.prototype.tokens.js
@@ -92,6 +107,7 @@ It's sort of a loosely related collection of extensions that exist until a W3C s
 ```html
 <script type="module" src="https://datadink.github.io/webtini/src/NamedNodeMap.prototype.tokens.js"></script>
 ```
-* docs: [https://github.com/DataDink/webtini/blob/main/docs/NamedNodeMap.prototype.tokens.md](https://github.com/DataDink/webtini/blob/main/docs/NamedNodeMap.prototype.tokens.md)
+* source: [https://github.com/DataDink/webtini/blob/main/src/NamedNodeMap.prototype.tokens.js](./src/NamedNodeMap.prototype.tokens.js)
+* docs: [https://github.com/DataDink/webtini/blob/main/docs/NamedNodeMap.prototype.tokens.md](./docs/NamedNodeMap.prototype.tokens.md)
 * url: [https://datadink.github.io/webtini/src/NamedNodeMap.prototype.tokens.js](https://datadink.github.io/webtini/src/NamedNodeMap.prototype.tokens.js)
 
