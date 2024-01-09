@@ -2,7 +2,7 @@
 
 *minimalistic web extensions to fill in the gaps*
 
-Similar to `vue` but smaller and rawer.
+Similarities to `vue` but smaller and rawer.
 
 * Declarative
 * Modular
@@ -10,6 +10,9 @@ Similar to `vue` but smaller and rawer.
 
 It's sort of a loosely related collection of extensions that exist until a W3C standard replaces them. 
 *-- just filling in the gaps*
+
+> ![WARN]
+> Nothing is fully documented or tested yet. Use at your own risk.
 
 ## Quick Start
 ```html
