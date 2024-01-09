@@ -1,6 +1,6 @@
 /*
  * @Author: Greenwald
- * @Documentation: https://datadink.github.io/webtini/src/Element.prototype.bind
+ * @Documentation: https://github.com/DataDink/webtini/blob/main/docs/Element.prototype.bind.md
  */
 export default class View {
   static #scope = Symbol('view');

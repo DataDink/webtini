@@ -1,6 +1,6 @@
 /*
  * @Author: Greenwald
- * @Documentation: https://datadink.github.io/webtini/src/HTMLDataTemplateElement
+ * @Documentation: https://github.com/DataDink/webtini/blob/main/docs/HTMLDataTemplateElement.md
  */
 import View from './Element.prototype.bind.js';
 export default class HTMLDataTemplateElement extends HTMLTemplateElement {
