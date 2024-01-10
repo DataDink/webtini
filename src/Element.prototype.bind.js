@@ -3,18 +3,19 @@
  * @Documentation: https://github.com/DataDink/webtini/blob/main/docs/Element.prototype.bind.md
  */
 export default class View {
-  static #scope = Symbol('view');
+  static #scoped = Symbol('scoped');
   static #attr = 'bind';
   static #prefix = 'bind-';
   static bind(view, model) {
-    view[View.#scope] = true;
-    let scan = [view];
+    const rescope = view instanceof View.#Rescope;
+    const scope = rescope ? view.element : view;
+    let scan = [scope];
     while (scan.length) {
-      const node = scan.shift();
+      const node = scan.shift(); 
       if (!(node instanceof Element)) continue;
       if (node.hasAttribute('debug-binding')) { debugger; }
-      if (node.hasAttribute(View.#attr)) {
-        View.bind(node, View.read(model, node.getAttribute(View.#attr)?.split('.')));
+      if (node.hasAttribute(View.#attr) && (!rescope || node !== scope)) {
+        View.bind(new View.#Rescope(node), View.read(model, node.getAttribute(View.#attr)?.split('.')));
         continue;
       }
       for (let attr of [...node.attributes]) {
@@ -28,7 +29,7 @@ export default class View {
         if (typeof(value) === 'function') { value = value.bind(data); }
         element[write] = value;
       }
-      scan.push(...[...node.childNodes].filter(n => !n[View.#scope]));
+      scan.push(...[...node.childNodes].filter(n => !n[View.#scoped]));
     }
     return view;
   }
@@ -47,5 +48,9 @@ export default class View {
     for (let key in object) { if (key.toLowerCase() === search) { return key; } }
     return index;
   }
+  static #Rescope = class Rescope { 
+    get element() { return this.#element; } #element;
+    constructor(element) { this.#element = element; }
+  };
 }
 Element.prototype.bind = function(model) { return View.bind(this, model); }
