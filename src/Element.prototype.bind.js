@@ -9,6 +9,7 @@ export default class View {
   static bind(view, model) {
     const rescope = view instanceof View.#Rescope;
     const scope = rescope ? view.element : view;
+    scope[View.#scoped] = true;
     let scan = [scope];
     while (scan.length) {
       const node = scan.shift(); 
