@@ -24,18 +24,21 @@ export default class View {
         const { value: element, index: write } = View.select(node, attr.name.slice(View.#prefix.length).split('-'));
         if (element == null) { continue; }
         const current = element[write];
-        const { value: data, index: read } = View.select(model, attr.value?.split('.'));
-        let value = data!=null?data[read]:null;
-        if (typeof(current) !== 'object' && typeof(value) !== 'object' && current === value) { continue; }
-        if (typeof(value) === 'function') { value = value.bind(data); }
-        element[write] = value;
+        const selector = attr.value?.split('.');
+        let future = View.read(model, selector);
+        if (typeof(current) !== 'object' && typeof(future) !== 'object' && current === future) { continue; }
+        if (typeof(future) === 'function') {
+          const { value: binding } = View.select(model, selector);
+          future = future.bind(binding); 
+        }
+        element[write] = future;
       }
       scan.push(...[...node.childNodes].filter(n => !n[View.#scoped]));
     }
     return view;
   }
   static read(object, selector) {
-    return selector?.reduce((v, p) => v!=null?v[View.match(v,p)]:null, object);
+    return selector?.reduce((v, p) => v!=null?(p?.length?v[View.match(v,p)]:v):null, object);
   }
   static select(object, selector) {
     return {
