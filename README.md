@@ -14,8 +14,6 @@ It's sort of a loosely related collection of extensions that exist until a W3C s
 > ![WARNING]
 > Nothing is fully documented or tested yet. Use at your own risk.
 
-* Do you like this? [Contributions Welcome](./community/README.md)
-
 ## Quick Start
 ```html
 <html>

@@ -4,11 +4,11 @@
 Extends the Element prototype with a `bind` method.
 Used to bind data to an element and all of its children.
 The element and its children are scanned for attributes that begin with `bind-`
-followed by a property name or dash(-) separated path on the element. 
-The attribute is given a property name or dot(.) separated path on the data.
+followed by a property name or dash(-) delimited path on the element. 
+The attribute is given a property name or dot(.) delimited path on the data.
 The property on the data is set to the value of the attribute on the element.
 The element must be re-bound if the data changes.
-The `bind` attribute can be used to change the data source for a subtree.
+The `bind` attribute can be used to change the data scope for a subtree.
 
 > [!NOTE]
 > property names are treated with case-insensitivity.
@@ -51,24 +51,24 @@ document.body.bind({
 
 # Additional Info
 
-## View
+## Binding
 
-The `bind` extension calls the View class.
+The `bind` extension calls creates an instance of the Binding class on the node.
 
 ```javascript
-import View from 'https://datadink.github.io/webtini/src/Element.prototype.bind.js';
+import Binding from 'https://datadink.github.io/webtini/src/Element.prototype.bind.js';
 ```
 
-**View.bind**
+**Binding.bind**
 
 ```javascript
 /*
- * @function View.bind(view, model) - Binds the values of the model object to the view element.
- * @parameter view {Element}        - The element the model is bound to
- * @parameter model {Object}        - The object that is bound to the view
- * @returns {Element}               - The view element
+ * @function Binding.bind(view, model) - Binds the values of the model object to the view element.
+ * @parameter view {Element}           - The element the model is bound to
+ * @parameter model {Object}           - The data that is bound to the view
+ * @returns {Element}                  - The view element
  */
-View.bind(document.body, { title: 'Page Title', message: 'A message to show' });
+Binding.bind(document.body, { title: 'Page Title', message: 'A message to show' });
 ```
 
 ```html
@@ -80,44 +80,44 @@ View.bind(document.body, { title: 'Page Title', message: 'A message to show' });
 </html>
 ```
 
-**View.read**
+**Binding.read**
 
 ```javascript
 /*
- * @function View.read(object, selector) - Reads the value at selected path from the root object
- * @parameter object {Object}            - The root object to select from
- * @parameter selector {Array}           - A set of property names addressing the value to read
- * @returns {any}                        - The selected value if the path exists, otherwise undefined
+ * @function Binding.read(object, selector) - Reads the value at selected path from the root object
+ * @parameter object {Object}               - The root object to select from
+ * @parameter selector {Array}              - A set of property names addressing the value to read
+ * @returns {any}                           - The selected value if the path exists, otherwise undefined
  * @notes
  *   Property names are case-insensitive.
  */
-View.read({ a: { b: { c: 123 } } }, ['a', 'b', 'c']); // returns 123
+Binding.read({ a: { b: { c: 123 } } }, ['a', 'b', 'c']); // returns 123
 ```
 
-**View.select**
+**Binding.select**
 
 ```javascript
 /*
- * @function View.select(object, selector)     - Queries an object and property name from the root object
- * @parameter object {Object}                  - The root object to select from
- * @parameter selector {Array}                 - A set of property names addressing the value to read
- * @returns {value: {object}, index: {string}} - The selection object and matched property name
+ * @function Binding.select(object, selector)     - Queries an object and property name from the root object
+ * @parameter object {Object}                     - The root object to select from
+ * @parameter selector {Array}                    - A set of property names addressing the value to read
+ * @returns {value: {object}, index: {string}}    - The selection object and matched property name
  * @notes
  *   Property names are case-insensitive.
  */
-View.select({ a: { b: { c: 123 } } }, ['a', 'b', 'c']); // returns { value: { c: 123 }, index: 'c' }
+Binding.select({ a: { b: { c: 123 } } }, ['a', 'b', 'c']); // returns { value: { c: 123 }, index: 'c' }
 ```
 
-**View.match**
+**Binding.match**
 
 ```javascript
 /*
- * @function View.match(object, index) - Seeks a property name matching the case-insensitive index
- * @parameter object {Object}          - The object to search
- * @parameter index {String}           - The property name to search for
- * @returns {string}                   - The matched name if exists or the original index value
+ * @function Binding.match(object, index) - Seeks a property name matching the case-insensitive index
+ * @parameter object {Object}             - The object to search
+ * @parameter index {String}              - The property name to search for
+ * @returns {string}                      - The matched name if exists or the original index value
  * @notes
  *   Property names are case-insensitive.
  */
-View.match({ a: 1, B: 2, c: 3 }, 'b'); // returns 'B'
+Binding.match({ a: 1, B: 2, c: 3 }, 'b'); // returns 'B'
 ```

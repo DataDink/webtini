@@ -7,7 +7,8 @@
   This class extends HTMLTemplateElement to render data to the DOM.
   Setting the `data` property will render the template content and bind it.
   If the `data` is an array, the template will be rendered for each item.
-  If the `data` is an object, the template will be rendered once.
+  If the `data` is an object, the template will be rendered for each property.
+  If the `data` is a value, the template will be rendered once.
   If the `data` is null or undefined, the template will be cleared.
   The content will be rendered immediately after the template element.
 
