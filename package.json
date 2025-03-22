@@ -1,0 +1,13 @@
+{
+  "name": "webtini",
+  "version": "1.0.0",
+  "description": "minimalistic web application framework",
+  "type": "module",
+  "main": "README.md",
+  "scripts": {},
+  "author": "greenwald",
+  "license": "SEE LICENSE IN LICENSE",
+  "devDependencies": {
+    "jsdoc": "^4.0.4"
+  }
+}

@@ -1,12 +1,14 @@
 /**
  * @author Greenwald
  * @license PDL
+ * @module EventBinder
  */
 import Binder from './Binder.js';
 
 /**
  * @class EventBinder
  * @description Enables the use of event binding attributes.
+ * @memberof module:EventBinder
  * @example
  * ```html
  * <html>

@@ -1,11 +1,13 @@
 /**
  * @author Greenwald
  * @license PDL
+ * @module TemplateBinder
  */
 import Binder from './Binder.js';
 /**
  * @class TemplateBinder
  * @description Enables the use of {@link HTMLTemplateElement} elements as data-templates.
+ * @memberof module:TemplateBinder
  * @example
  * ```html
  * <html>

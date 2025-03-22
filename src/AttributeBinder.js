@@ -1,12 +1,14 @@
 /**
  * @author Greenwald
  * @license PDL
+ * @module AttributeBinder
  */
 import Binder from './Binder.js';
 
 /**
  * @class AttributeBinder
  * @description Enables the use of attribute binding attributes.
+ * @memberof module:AttributeBinder
  * @example
  * ```html
  * <html>
@@ -20,6 +22,7 @@ import Binder from './Binder.js';
 export default class AttributeBinder extends Binder.Extension {
   /**
    * @property PREFIX
+   * @member {string} module:AttributeBinder.PREFIX
    * @description The prefix for identifying attribute binding attributes.
    * @type {string}
    */

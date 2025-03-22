@@ -1,12 +1,14 @@
 /**
  * @author Greenwald
  * @license PDL
+ * @module ClassBinder
  */
 import Binder from './Binder.js';
 
 /**
  * @class ClassBinder
  * @description Enables the use of class name binding attributes.
+ * @memberof module:ClassBinder
  * @example
  * ```html
  * <html>

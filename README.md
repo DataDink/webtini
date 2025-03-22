@@ -42,7 +42,7 @@ Similarities to `vue` but smaller and rawer.
         links = [
           { text: 'github',  url: 'https://github.com' },
           { text: 'webtini',  url: 'https://github.com/datadink/webtini' },
-          { text: 'documentation',  url: 'https://datadink.github.io/webtini/' },
+          { text: 'documentation',  url: 'https://datadink.github.io/webtini/docs' },
         ];
         count = 0;
         increment() { 

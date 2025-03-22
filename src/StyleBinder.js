@@ -1,6 +1,7 @@
 /**
  * @author Greenwald
  * @license PDL
+ * @module StyleBinder
  */
 import Route from './Route.js';
 import Binder from './Binder.js';
@@ -8,6 +9,7 @@ import Binder from './Binder.js';
 /**
  * @class StyleBinder
  * @description Enables the use of style binding attributes.
+ * @memberof module:StyleBinder
  * @example
  * ```html
  * <html>
