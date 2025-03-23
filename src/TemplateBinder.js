@@ -73,7 +73,9 @@ export default class TemplateBinder extends Binder.Extension {
     }
     for (var i = 0; i < items.length; i++) { 
       for (var e of instances[i]) {
+        e[TemplateBinder.#instance] = false;
         binder.bind(e, items[i]);
+        e[TemplateBinder.#instance] = true;
       }
     }
     return true;

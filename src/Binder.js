@@ -69,6 +69,7 @@ export default class Binder {
    * @returns {Element}
    */
   bind(view, data) {
+    if (this.#extensions.find(e => e.handleElement(this, view, data))) { return view; }
     if (!(view instanceof Element)) { return view; }
     data = data instanceof Route ? data : new Route(data);
     for (var attr of [...view.attributes]) {
@@ -82,7 +83,6 @@ export default class Binder {
     }
     var scope = view.hasAttribute(Binder.ATTRIBUTE) ? data.select(view.getAttribute(Binder.ATTRIBUTE)?.split('.')) : data;
     for (var child of [...view.childNodes]) {
-      if (this.#extensions.find(e => e.handleElement(this, child, scope))) { continue; }
       this.bind(child, scope);
     }
     return view;
