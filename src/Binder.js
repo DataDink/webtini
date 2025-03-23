@@ -69,9 +69,9 @@ export default class Binder {
    * @returns {Element}
    */
   bind(view, data) {
+    data = data instanceof Route ? data : new Route(data);
     if (this.#extensions.find(e => e.handleElement(this, view, data))) { return view; }
     if (!(view instanceof Element)) { return view; }
-    data = data instanceof Route ? data : new Route(data);
     for (var attr of [...view.attributes]) {
       var name = attr.name.toLowerCase();
       if (!attr.name.startsWith(Binder.PREFIX)) { continue; }
