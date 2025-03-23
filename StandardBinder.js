@@ -14,8 +14,9 @@ import AttributeBinder from './src/AttributeBinder.js';
  * @description A standard binder with all the default extensions.
  */
 export default class StandardBinder extends Binder {
-  constructor() {
+  constructor(...extensions) {
     super(
+      ...extensions,
       new TemplateBinder(),
       new EventBinder(),
       new StyleBinder(),

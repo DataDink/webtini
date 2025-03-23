@@ -11,8 +11,9 @@ import EventBinder from './src/EventBinder.js';
  * @description A minimal binder with only the basic extensions needed for content generation and interactivity.
  */
 export default class MinimalBinder extends Binder {
-  constructor() {
+  constructor(...extensions) {
     super(
+      ...extensions,
       new TemplateBinder(),
       new EventBinder(),
     );
