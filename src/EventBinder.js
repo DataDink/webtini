@@ -30,14 +30,22 @@ export default class EventBinder extends Binder.Extension {
     if (!name.startsWith(EventBinder.PREFIX)) { return false; }
     var event = name.substring(EventBinder.PREFIX.length);
     var events = element[EventBinder.#events] ??= {};
-    var handler = route.select(value.split('.')).result;
-    if (event in events && events[event].source === handler) { return true; }
+    var handler = route.select(value.split('.'));
+    if (event in events 
+      && events[event].data === handler.data 
+      && events[event].handler === events[event].result) { 
+        return true; 
+    }
     if (event in events) {
       element.removeEventListener(event, events[event].binding);
       delete events[event];
     }
-    if (typeof(handler) !== 'function') { return true; }
-    events[event] = { source: handler, binding: handler.bind(route.result) };
+    if (typeof(handler.result) !== 'function') { return true; }
+    events[event] = { 
+      data: handler.data, 
+      handler: handler.result,
+      binding: handler.result.bind(handler.data) 
+    };
     element.addEventListener(event, events[event].binding);
     return true;
   }
