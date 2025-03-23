@@ -56,7 +56,16 @@ export default class TemplateBinder extends Binder.Extension {
               : Array.isArray(route.result) ? route.result.map((v,i) => route.clone().append(i.toString(), v))
               : [route];
     var instances = element[TemplateBinder.#instances] ??= [];
-    while (instances.length > items.length) { instances.pop().map(e => e.remove()); }
+    while (instances.length > items.length) {
+      var instance = instances.pop();
+      for (var e of instance) {
+        e[TemplateBinder.#instance] = false;
+        if (e instanceof HTMLTemplateElement) { 
+          binder.bind(e, null); 
+        }
+        e.remove();
+      }
+    }
     var insert = instances.at(-1)?.at(-1)?.nextSibling ?? element.nextSibling;
     while (instances.length < items.length) {
       var instance = [...element.content.cloneNode(true).childNodes];
