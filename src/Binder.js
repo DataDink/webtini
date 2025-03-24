@@ -40,6 +40,14 @@ export default class Binder {
    */
   static get PREFIX() { return 'bind-'; }
 
+  #active = 0;
+  /**
+   * @member {boolean} module:Binder.active
+   * @description Indicates whether the binder is currently processing a view.
+   * @type {boolean}
+   */
+  get active() { return this.#active > 0; }
+
   #extensions = [];
   /**
    * @constructor
@@ -69,9 +77,13 @@ export default class Binder {
    * @returns {Element}
    */
   bind(view, data) {
+    this.#active++;
     data = data instanceof Route ? data : new Route(data);
-    if (this.#extensions.find(e => e.handleElement(this, view, data))) { return view; }
-    if (!(view instanceof Element)) { return view; }
+    const handled = this.#extensions.find(e => e.handleElement(this, view, data)) || !(view instanceof Element);
+    if (handled) { 
+      this.#active--;
+      return view; 
+    }
     for (var attr of [...view.attributes]) {
       var name = attr.name.toLowerCase();
       if (!attr.name.startsWith(Binder.PREFIX)) { continue; }
@@ -85,6 +97,7 @@ export default class Binder {
     for (var child of [...view.childNodes]) {
       this.bind(child, scope);
     }
+    this.#active--;
     return view;
   }
   /**

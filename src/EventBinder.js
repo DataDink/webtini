@@ -41,10 +41,13 @@ export default class EventBinder extends Binder.Extension {
       delete events[event];
     }
     if (typeof(handler.result) !== 'function') { return true; }
-    events[event] = { 
+    var context = events[event] = { 
       data: handler.data, 
       handler: handler.result,
-      binding: handler.result.bind(handler.data) 
+      binding: function() {
+        if (binder.active) { return; }
+        return context.handler.apply(context.data, arguments);
+      }
     };
     element.addEventListener(event, events[event].binding);
     return true;
