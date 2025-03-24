@@ -2,7 +2,7 @@
 
 *minimalistic view modeling framework*
 
-Similarities to `vue` but smaller and rawer.
+Similarities to `knockout` and `vue` but smaller and rawer.
 
 * Declarative
 * Modular
