@@ -79,13 +79,6 @@ Similarities to `knockout` and `vue` but smaller and rawer.
         // A coordinated data value that multiple parts of the application use
         count = 0;
 
-        // Creates an array of items based on the "count" that a template in the view binds to.
-        get items() { 
-          var number = Math.abs(Math.min(100, Number.isNaN( this.count) ? 0 : this.count));
-          return [...new Array(number)]
-            .map((_, i) => ({ value: i + 1 })); 
-        }
-
         // An event handler that triggers when the button in the view is clicked
         increment() { 
           this.count++; 
@@ -97,6 +90,13 @@ Similarities to `knockout` and `vue` but smaller and rawer.
         oninput(e) { 
           this.count = parseInt(e.target.value ?? 0); 
           this.render();
+        }
+
+        // (Advanced) Creates an array of items based on the "count" that a template in the view binds to.
+        get items() { 
+          var number = Math.abs(Math.min(100, Number.isNaN( this.count) ? 0 : this.count));
+          return [...new Array(number)]
+            .map((_, i) => ({ value: i + 1 })); 
         }
 
         // Triggers the binder on the body of this page to (re)render the page with the application's data
