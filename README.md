@@ -52,13 +52,8 @@ Similarities to `knockout` and `vue` but smaller and rawer.
     </div>
     <!-- Note: Be aware of COORS below -->
     <script type="module">
-      // The Binder is the core engine for webtini applications. 
-      // The StandardBinder contains all of the basic/default extensions:
-      //   * AttributeBinder: Allows you to "bind-attribute-name" to bind to an element's attributes
-      //   * ClassBinder: Allows you to "bind-class-name" to add/remove classes based on a boolean(ish) binding
-      //   * EventBinder: Allows you to "bind-event-name" to bind events to functions
-      //   * StyleBinder: Allows you to "bind-style-name" to bind an element's .style[name]
-      //   * TemplateBinder: Causes HTMLTemplateElements to generate content when bound to arrays
+      // Binders are the engines for webtini applications.
+      // The StandardBinder includes all standard modules / functionality.
       import StandardBinder from 'https://datadink.github.io/webtini/StandardBinder.js'
 
       // The application is a viewmodel that the web view can be bound to using the Binder.
