@@ -8,6 +8,7 @@ Similarities to `knockout` and `vue` but smaller and rawer.
 * Modular
 * Conformant
 * Unobtrusive
+* Minimalistic
 
 > ![WARNING]
 > Nothing is fully documented or tested yet. Use at your own risk.
@@ -199,3 +200,20 @@ binder.bind(element, { data: { context: { items: [{name: 'a'}, {name: 'b'}] } } 
   </body>
 </html>
 ```
+
+# FAQ
+
+* When does it make sense to use this?
+  * When you need something fast with little effort.
+* Can this be used for large applications?
+  * Yes. 
+* Does this work on legacy browsers?
+  * No: webtini targets modern browsers only
+* Is it performant?
+  * Depends: webtini leaves performance up to you. You have full control over the render/update loop, etc.
+* Does it scale?
+  * Depends: webtini only focuses on connecting your view with your data & functionality. The scalability of the app you write is up to you.
+* What do I have to learn?
+  * Raw javascript, html, css, etc.
+* How does this fit in with REACT?
+  * It doesn't. React obfuscates web technologies. webtini embraces them.
