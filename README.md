@@ -13,93 +13,6 @@ Similarities to `knockout` and `vue` but smaller and rawer.
 > ![WARNING]
 > Nothing is fully documented or tested yet. Use at your own risk.
 
-# Packages
-
-### Standard
-
-Provides basic model binding, content generation & interactivity
-
-```html
-<script src="https://datadink.github.io/webtini/packages/standard-binder-package.min.js"></script>
-```
-
-```javascript
-// Not optimal...
-import StandardBinder from 'https://datadink.github.io/webtini/StandardBinder.js';
-```
-
-**Includes:**
-
-* AttributeBinder
-* ClassBinder
-* EventBinder
-* StyleBinder
-* TempalteBinder
-
-### Minimal
-
-Provides basic model binding, content generation & interactivity
-
-```html
-<script src="https://datadink.github.io/webtini/packages/minimal-binder-package.min.js"></script>
-```
-
-```javascript
-// Not optimal...
-import MinimalBinder from 'https://datadink.github.io/webtini/MinimalBinder.js';
-```
-
-**Includes:**
-
-* TemplateBinder
-* EventBinder
-
-# Modules
-
-### AttributeBinder
-
-Enables `bind-attribute-name` attributes to bind values to other attributes on an element
-
-```html
-<img bind-attribute-alt="data.context.text" />
-```
-
-### ClassBinder
-
-Enables `bind-class-name` attributes to toggle classes on an element from a boolean(ish) value
-
-```html
-<div bind-class-bordered="data.context.selected">...</div>
-```
-
-### EventBinder
-
-Enables `bind-event-name` attributes to assign functions to events on an element
-
-```html
-<button bind-event-click="data.context.submit">Save</button>
-```
-
-### StyleBinder
-
-Enables `bind-style-name` attributes to assign values to an element's styles
-
-```html
-<div bind-style-background="data.context.color">...</div>
-```
-
-### TemplateBinder
-
-Causes `HTMLTemplateElement`s to generate content when bound to an array
-
-```html
-<template bind="data.context.items"><span bind-textcontent="name"></span></template>
-```
-
-```javascript
-binder.bind(element, { data: { context: { items: [{name: 'a'}, {name: 'b'}] } } });
-```
-
 # Quick Start
 
 ```html
@@ -199,6 +112,95 @@ binder.bind(element, { data: { context: { items: [{name: 'a'}, {name: 'b'}] } } 
     </script>
   </body>
 </html>
+```
+
+# Packages
+
+### Standard
+
+Includes all standard modules
+
+```html
+<!-- to pull directly from github (not for production) -->
+<script src="https://datadink.github.io/webtini/packages/standard-binder-package.min.js"></script>
+```
+
+```javascript
+// less optimal & also not for production
+import StandardBinder from 'https://datadink.github.io/webtini/StandardBinder.js';
+```
+
+**Includes:**
+
+* AttributeBinder
+* ClassBinder
+* EventBinder
+* StyleBinder
+* TempalteBinder
+
+### Minimal
+
+Provides basic model binding, content generation & interactivity
+
+```html
+<!-- to pull directly from github (not for production) -->
+<script src="https://datadink.github.io/webtini/packages/minimal-binder-package.min.js"></script>
+```
+
+```javascript
+// less optimal & also not for production
+import MinimalBinder from 'https://datadink.github.io/webtini/MinimalBinder.js';
+```
+
+**Includes:**
+
+* TemplateBinder
+* EventBinder
+
+# Modules
+
+### AttributeBinder
+
+Enables `bind-attribute-name` attributes to bind values to other attributes on an element
+
+```html
+<img bind-attribute-alt="data.context.text" />
+```
+
+### ClassBinder
+
+Enables `bind-class-name` attributes to toggle classes on an element from a boolean(ish) value
+
+```html
+<div bind-class-bordered="data.context.selected">...</div>
+```
+
+### EventBinder
+
+Enables `bind-event-name` attributes to assign functions to events on an element
+
+```html
+<button bind-event-click="data.context.submit">Save</button>
+```
+
+### StyleBinder
+
+Enables `bind-style-name` attributes to assign values to an element's styles
+
+```html
+<div bind-style-background="data.context.color">...</div>
+```
+
+### TemplateBinder
+
+Causes `HTMLTemplateElement`s to generate content when bound to an array
+
+```html
+<template bind="data.context.items"><span bind-textcontent="name"></span></template>
+```
+
+```javascript
+binder.bind(element, { data: { context: { items: [{name: 'a'}, {name: 'b'}] } } });
 ```
 
 # FAQ
