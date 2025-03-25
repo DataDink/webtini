@@ -19,4 +19,3 @@ export default class MinimalBinder extends Binder {
     );
   }
 }
-window.MinimalBinder = MinimalBinder;
