@@ -25,3 +25,4 @@ export default class StandardBinder extends Binder {
     );
   }
 }
+window.StandardBinder = StandardBinder;

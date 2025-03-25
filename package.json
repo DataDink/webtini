@@ -8,6 +8,11 @@
   "author": "greenwald",
   "license": "SEE LICENSE IN LICENSE",
   "devDependencies": {
-    "jsdoc": "^4.0.4"
+    "@babel/core": "^7.26.10",
+    "@babel/preset-env": "^7.26.9",
+    "babelify": "^10.0.0",
+    "browserify": "^17.0.1",
+    "jsdoc": "^4.0.4",
+    "minify": "^14.0.0"
   }
 }
