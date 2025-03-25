@@ -59,7 +59,7 @@ Similarities to `knockout` and `vue` but smaller and rawer.
       //   * EventBinder: Allows you to "bind-event-name" to bind events to functions
       //   * StyleBinder: Allows you to "bind-style-name" to bind an element's .style[name]
       //   * TemplateBinder: Causes HTMLTemplateElements to generate content when bound to arrays
-      import StandardBinder from 'http://localhost/StandardBinder.js'
+      import StandardBinder from 'https://datadink.github.io/webtini/StandardBinder.js'
 
       // The application is a viewmodel that the web view can be bound to using the Binder.
       // It defines all of the exposed data & functionality for binding from the view.
