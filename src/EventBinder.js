@@ -30,9 +30,9 @@ class EventBinder extends Binder.Extension {
   static #events = Symbol('events');
   handleAttribute(binder, element, route, name, value) {
     if (!name.startsWith(EventBinder.PREFIX)) { return false; }
-    var event = name.substring(EventBinder.PREFIX.length);
-    var events = element[EventBinder.#events] ??= {};
-    var handler = route.select(value.split('.'));
+    const event = name.substring(EventBinder.PREFIX.length);
+    const events = element[EventBinder.#events] ??= {};
+    const handler = route.select(value.split('.'));
     if (event in events 
       && events[event].data === handler.data 
       && events[event].handler === events[event].result) { 
@@ -43,7 +43,7 @@ class EventBinder extends Binder.Extension {
       delete events[event];
     }
     if (typeof(handler.result) !== 'function') { return true; }
-    var context = events[event] = { 
+    const context = events[event] = { 
       data: handler.data, 
       handler: handler.result,
       binding: function() {

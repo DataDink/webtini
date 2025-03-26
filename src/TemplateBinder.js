@@ -46,11 +46,11 @@ class TemplateBinder extends Binder.Extension {
     if (element[TemplateBinder.#instance]) { return true; }
     if (!(element instanceof HTMLTemplateElement)) { return false; }
     route = element.hasAttribute(Binder.ATTRIBUTE) ? route.select(element.getAttribute(Binder.ATTRIBUTE)?.split('.')) : route;
-    var recurse = element.hasAttribute(Binder.ATTRIBUTE) && element.hasAttribute(TemplateBinder.RECURSE);
-    var items = route.result == null ? []
+    const recurse = element.hasAttribute(Binder.ATTRIBUTE) && element.hasAttribute(TemplateBinder.RECURSE);
+    const items = route.result == null ? []
               : Array.isArray(route.result) ? route.result.map((v,i) => route.clone().append(i.toString(), v))
               : [route];
-    var instances = element[TemplateBinder.#instances] ??= [];
+    const instances = element[TemplateBinder.#instances] ??= [];
     while (instances.length > items.length) {
       var instance = instances.pop();
       for (var e of instance) {
@@ -70,7 +70,7 @@ class TemplateBinder extends Binder.Extension {
         element.parentNode.insertBefore(e, insert);
       }
       if (recurse) { 
-        var recursion = element.cloneNode(true);
+        const recursion = element.cloneNode(true);
         instance.push(recursion);
         element.parentNode.insertBefore(recursion, insert);
       }

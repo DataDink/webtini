@@ -19,26 +19,23 @@ Similarities to `knockout` and `vue` but smaller and rawer.
 <html>
   <head>
     <title>webtini quick-start</title>
-    <style>
-      /* A style for the page initial loading state */
-      .loading { display: none; }
-    </style>
+    <!-- A style to hide the page until its ready -->
+    <style>.loading { display: none; }</style>
   </head>
   <!-- Bind the "loading" class to the isLoading property on the Application -->
   <body class="loading" bind-class-loading="isLoading">
     <header>
-      <!-- Binds the textContent of the H1 to the title property on the Application -->
-      <h1 bind-textContent="title"></h1>
+      <!-- Binds to the "title" property on the application -->
+      <h1>{title}</h1>
     </header>
     <menu>
-      <!-- Binds this template to the "links" array on the Application -->
-      <!-- An instance of the template's content will be bound to each item in the "links" array -->
+      <!-- Binds this template to the `links` array on the Application -->
+      <!-- Each item in the `links` array will generate an instance of the template content -->
       <template bind="links">
-        <li><a bind-href="url" bind-textContent="text"></a></li>
+        <li><a bind-href="url">{text}</a></li>
       </template>
     </menu>
-    <!-- Binds the span's textcontent to the "count" property on the application -->
-    <h1>Count: <span bind-textcontent="count"></span></h1>
+    <h1>Count: {count}</h1>
     <!-- Binds the button's "click" event to the "increment" function on the application -->
     <button bind-event-click="increment">Increment</button>
     <!-- Binds the input's "value" property to the application's "count" property -->
@@ -46,15 +43,19 @@ Similarities to `knockout` and `vue` but smaller and rawer.
     <input type="number" bind-value="count" bind-event-input="oninput">
     <div>
       <!-- Binds this template to the "items" array on the Application -->
+      <!-- Note: Each item is bound to Application.items[x]
+        `~` binds the data root (Application)
+        `^` binds the parent (Applications.items)
+        `^.^` binds the parent-parent (Application)
+      -->
       <template bind="items">
-        <span bind-textContent="value"></span>
+        <span>{{{value} of {^.length} or {~.count}/{^.^.count}}}</span>
       </template>
     </div>
-    <!-- Note: Be aware of COORS below -->
     <script type="module">
       // Binders are the engines for webtini applications.
       // The StandardBinder includes all standard modules / functionality.
-      import StandardBinder from 'https://datadink.github.io/webtini/StandardBinder.js'
+      import StandardBinder from 'https://datadink.github.io/webtini/StandardBinder.js'; // NOTE: Be aware of COORS
 
       // The application is a viewmodel that the web view can be bound to using the Binder.
       // It defines all of the exposed data & functionality for binding from the view.
@@ -71,9 +72,8 @@ Similarities to `knockout` and `vue` but smaller and rawer.
         // The page navigation template binds here and generates an instance of its content
         // for each item.
         links = [
-          { text: 'github',  url: 'https://github.com' },
-          { text: 'webtini',  url: 'https://github.com/datadink/webtini' },
-          { text: 'documentation',  url: 'https://datadink.github.io/webtini/' },
+          { text: 'source',  url: 'https://github.com/datadink/webtini' },
+          { text: 'documentation',  url: 'https://datadink.github.io/webtini/docs' },
         ];
 
         // A coordinated data value that multiple parts of the application use
@@ -94,8 +94,8 @@ Similarities to `knockout` and `vue` but smaller and rawer.
 
         // (Advanced) Creates an array of items based on the "count" that a template in the view binds to.
         get items() { 
-          var number = Math.abs(Math.min(100, Number.isNaN( this.count) ? 0 : this.count));
-          return [...new Array(number)]
+          var number = Math.abs(Math.max(-5000, Math.min(100, this.count)));
+          return [...new Array(Number.isNaN(number) ? 0 : number)]
             .map((_, i) => ({ value: i + 1 })); 
         }
 

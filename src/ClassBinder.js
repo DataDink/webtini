@@ -30,8 +30,8 @@ class ClassBinder extends Binder.Extension {
   static get PREFIX() { return 'class-'; }
   handleAttribute(binder, element, route, name, value) {
     if (!name.startsWith(ClassBinder.PREFIX)) { return false; }
-    var classname = name.substring(ClassBinder.PREFIX.length);
-    var state = !!route.select(value.split('.')).result;
+    const classname = name.substring(ClassBinder.PREFIX.length);
+    const state = !!route.select(value.split('.')).result;
     if (element.classList.contains(classname) === state) { return true; }
     element.classList.toggle(classname);
     return true;

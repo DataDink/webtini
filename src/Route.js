@@ -105,7 +105,7 @@ export default class Route {
    * @returns {Route}
    */
   append(name, value) {
-    var next = this.#next = new Route();
+    const next = this.#next = new Route();
     next.#name = name;
     next.#value = value;
     next.#root = this.#root;
@@ -120,8 +120,8 @@ export default class Route {
    * @returns {Route}
    */
   clone() {
-    var clone = new Route(this.value);
-    for (var node = this.#next; node; node = node.#next) {
+    var clone = new Route(this.#root.#value);
+    for (var node = this.#root.#next; node; node = node.#next) {
       clone = clone.append(node.#name, node.#value);
     }
     return clone;
@@ -134,7 +134,7 @@ export default class Route {
    */
   static find(data, name) {
     if (data == null || name in data) { return name; }
-    var lower = name.toLowerCase();
+    const lower = name.toLowerCase();
     for (var key in data) { if (key.toLowerCase() === lower) { return key; } }
     return name;
   }
@@ -157,7 +157,7 @@ export default class Route {
       else if (m === '~') { r = r.#root; r.#last = r; r.#next = null; }
       else if (m === '^') { r = r.#parent ?? r; r.#root.#last = r; r.#next = null; }
       else {
-        var name = Route.find(r.#value, m);
+        const name = Route.find(r.#value, m);
         r = r.append(name, r.#value?.[name]); 
       }
       return r;
@@ -178,13 +178,13 @@ export default class Route {
    */
   static assign(route, value) {
     if (!(route instanceof Route)) { throw new Error('Route.assign: route must be an instance of a Route.'); }
-    var result = new Route(route.#root.#value);
-    if (route.root.next == null || result.value == null) { return result; }
+    var update = new Route(route.#root.#value);
+    if (route.root.next == null || update.value == null) { return update; }
     for (var node = route.root.next; node; node = node.next) {
-      var name = Route.find(result.value, node.name);
-      result = result.append(name, result.value[name] ?? (result.value[name] = {}));
+      var name = Route.find(update.value, node.name);
+      update = update.append(name, update.value[name] ??= {});
     }
-    result.#value = result.parent.value[result.name] = value;
-    return result;
+    update.#value = update.data[update.name] = value;
+    return update;
   }
 }

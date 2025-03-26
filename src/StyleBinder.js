@@ -30,8 +30,8 @@ class StyleBinder extends Binder.Extension {
   static get PREFIX() { return 'style-'; }
   handleAttribute(binder, element, route, name, value) {
     if (!name.startsWith(StyleBinder.PREFIX)) { return false; }
-    var style = Route.find(element.style, name.substring(StyleBinder.PREFIX.length));
-    var setting = route.select(value.split('.')).result?.toString();
+    const style = Route.find(element.style, name.substring(StyleBinder.PREFIX.length));
+    const setting = route.select(value.split('.')).result?.toString();
     if (element.style[style] === setting) { return true; }
     element.style[style] = setting;
     return true;

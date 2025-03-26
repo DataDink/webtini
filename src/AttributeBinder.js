@@ -30,10 +30,10 @@ class AttributeBinder extends Binder.Extension {
   static get PREFIX() { return 'attribute-'; }
   handleAttribute(binder, element, route, name, value) {
     if (!name.startsWith(AttributeBinder.PREFIX)) { return false; }
-    var attr = name.substring(AttributeBinder.PREFIX.length);
-    var content = route.select(value.split('.')).value?.toString();
+    const attr = name.substring(AttributeBinder.PREFIX.length);
+    const content = route.select(value.split('.')).value?.toString();
     if (content == null && !element.hasAttribute(attr)) { return true; }
-    var current = element.getAttribute(attr);
+    const current = element.getAttribute(attr);
     if (content === current) { return true; }
     if (content == null) {
       element.removeAttribute(attr);

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>webtini: Home</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -16,9 +16,7 @@
 <body>
 
 <div id="main">
-
-    <h1 class="page-title">Home</h1>
-
+    <h2 class="page-title" style="background: rgba(0,0,0,0.1); padding: 0 1em;"></h2>
     
 
 
@@ -61,26 +59,23 @@ Nothing is fully tested yet. Use at your own risk.</p>
 <pre class="prettyprint source lang-html"><code>&lt;html>
   &lt;head>
     &lt;title>webtini quick-start&lt;/title>
-    &lt;style>
-      /* A style for the page initial loading state */
-      .loading { display: none; }
-    &lt;/style>
+    &lt;!-- A style to hide the page until its ready -->
+    &lt;style>.loading { display: none; }&lt;/style>
   &lt;/head>
   &lt;!-- Bind the &quot;loading&quot; class to the isLoading property on the Application -->
   &lt;body class=&quot;loading&quot; bind-class-loading=&quot;isLoading&quot;>
     &lt;header>
-      &lt;!-- Binds the textContent of the H1 to the title property on the Application -->
-      &lt;h1 bind-textContent=&quot;title&quot;>&lt;/h1>
+      &lt;!-- Binds to the &quot;title&quot; property on the application -->
+      &lt;h1>{title}&lt;/h1>
     &lt;/header>
     &lt;menu>
-      &lt;!-- Binds this template to the &quot;links&quot; array on the Application -->
-      &lt;!-- An instance of the template's content will be bound to each item in the &quot;links&quot; array -->
+      &lt;!-- Binds this template to the `links` array on the Application -->
+      &lt;!-- Each item in the `links` array will generate an instance of the template content -->
       &lt;template bind=&quot;links&quot;>
-        &lt;li>&lt;a bind-href=&quot;url&quot; bind-textContent=&quot;text&quot;>&lt;/a>&lt;/li>
+        &lt;li>&lt;a bind-href=&quot;url&quot;>{text}&lt;/a>&lt;/li>
       &lt;/template>
     &lt;/menu>
-    &lt;!-- Binds the span's textcontent to the &quot;count&quot; property on the application -->
-    &lt;h1>Count: &lt;span bind-textcontent=&quot;count&quot;>&lt;/span>&lt;/h1>
+    &lt;h1>Count: {count}&lt;/h1>
     &lt;!-- Binds the button's &quot;click&quot; event to the &quot;increment&quot; function on the application -->
     &lt;button bind-event-click=&quot;increment&quot;>Increment&lt;/button>
     &lt;!-- Binds the input's &quot;value&quot; property to the application's &quot;count&quot; property -->
@@ -88,15 +83,19 @@ Nothing is fully tested yet. Use at your own risk.</p>
     &lt;input type=&quot;number&quot; bind-value=&quot;count&quot; bind-event-input=&quot;oninput&quot;>
     &lt;div>
       &lt;!-- Binds this template to the &quot;items&quot; array on the Application -->
+      &lt;!-- Note: Each item is bound to Application.items[x]
+        `~` binds the data root (Application)
+        `^` binds the parent (Applications.items)
+        `^.^` binds the parent-parent (Application)
+      -->
       &lt;template bind=&quot;items&quot;>
-        &lt;span bind-textContent=&quot;value&quot;>&lt;/span>
+        &lt;span>{{{value} of {^.length} or {~.count}/{^.^.count}}}&lt;/span>
       &lt;/template>
     &lt;/div>
-    &lt;!-- Note: Be aware of COORS below -->
     &lt;script type=&quot;module&quot;>
       // Binders are the engines for webtini applications.
       // The StandardBinder includes all standard modules / functionality.
-      import StandardBinder from 'https://datadink.github.io/webtini/StandardBinder.js'
+      import StandardBinder from 'https://datadink.github.io/webtini/StandardBinder.js'; // NOTE: Be aware of COORS
 
       // The application is a viewmodel that the web view can be bound to using the Binder.
       // It defines all of the exposed data & functionality for binding from the view.
@@ -113,9 +112,8 @@ Nothing is fully tested yet. Use at your own risk.</p>
         // The page navigation template binds here and generates an instance of its content
         // for each item.
         links = [
-          { text: 'github',  url: 'https://github.com' },
-          { text: 'webtini',  url: 'https://github.com/datadink/webtini' },
-          { text: 'documentation',  url: 'https://datadink.github.io/webtini/' },
+          { text: 'source',  url: 'https://github.com/datadink/webtini' },
+          { text: 'documentation',  url: 'https://datadink.github.io/webtini/docs' },
         ];
 
         // A coordinated data value that multiple parts of the application use
@@ -136,8 +134,8 @@ Nothing is fully tested yet. Use at your own risk.</p>
 
         // (Advanced) Creates an array of items based on the &quot;count&quot; that a template in the view binds to.
         get items() { 
-          var number = Math.abs(Math.min(100, Number.isNaN( this.count) ? 0 : this.count));
-          return [...new Array(number)]
+          var number = Math.abs(Math.max(-5000, Math.min(100, this.count)));
+          return [...new Array(Number.isNaN(number) ? 0 : number)]
             .map((_, i) => ({ value: i + 1 })); 
         }
 
@@ -251,13 +249,13 @@ import MinimalBinder from 'https://datadink.github.io/webtini/MinimalBinder.js';
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AttributeBinder.html">AttributeBinder</a></li><li><a href="module-Binder.html">Binder</a></li><li><a href="module-ClassBinder.html">ClassBinder</a></li><li><a href="module-EventBinder.html">EventBinder</a></li><li><a href="module-Route.html">Route</a></li><li><a href="module-StyleBinder.html">StyleBinder</a></li><li><a href="module-TemplateBinder.html">TemplateBinder</a></li></ul><h3>Classes</h3><ul><li><a href="module-AttributeBinder.AttributeBinder.html">AttributeBinder</a></li><li><a href="module-Binder.Binder.html">Binder</a></li><li><a href="module-Binder.Binder.Extension.html">Extension</a></li><li><a href="module-ClassBinder.ClassBinder.html">ClassBinder</a></li><li><a href="module-EventBinder.EventBinder.html">EventBinder</a></li><li><a href="module-Route.Route.html">Route</a></li><li><a href="module-StyleBinder.StyleBinder.html">StyleBinder</a></li><li><a href="module-TemplateBinder.TemplateBinder.html">TemplateBinder</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AttributeBinder.html">AttributeBinder</a></li><li><a href="module-Binder.html">Binder</a></li><li><a href="module-ClassBinder.html">ClassBinder</a></li><li><a href="module-EventBinder.html">EventBinder</a></li><li><a href="module-Route.html">Route</a></li><li><a href="module-StyleBinder.html">StyleBinder</a></li><li><a href="module-TemplateBinder.html">TemplateBinder</a></li><li><a href="module-TextBinder.html">TextBinder</a></li></ul><h3>Classes</h3><ul><li><a href="module-AttributeBinder.AttributeBinder.html">AttributeBinder</a></li><li><a href="module-Binder.Binder.html">Binder</a></li><li><a href="module-Binder.Binder.Extension.html">Extension</a></li><li><a href="module-ClassBinder.ClassBinder.html">ClassBinder</a></li><li><a href="module-EventBinder.EventBinder.html">EventBinder</a></li><li><a href="module-Route.Route.html">Route</a></li><li><a href="module-StyleBinder.StyleBinder.html">StyleBinder</a></li><li><a href="module-TemplateBinder.TemplateBinder.html">TemplateBinder</a></li><li><a href="module-TextBinder.TextBinder.html">TextBinder</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Mar 26 2025 09:43:39 GMT-0700 (Pacific Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Mar 26 2025 12:26:12 GMT-0700 (Pacific Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

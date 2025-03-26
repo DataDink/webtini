@@ -3,6 +3,7 @@
  * @license PDL
  */
 import Binder from './src/Binder.js';
+import TextBinder from './src/TextBinder.js';
 import TemplateBinder from './src/TemplateBinder.js';
 import EventBinder from './src/EventBinder.js';
 import StyleBinder from './src/StyleBinder.js';
@@ -18,6 +19,7 @@ class StandardBinder extends Binder {
   constructor(...extensions) {
     super(
       ...extensions,
+      new TextBinder(),
       new TemplateBinder(),
       new EventBinder(),
       new StyleBinder(),

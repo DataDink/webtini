@@ -95,7 +95,7 @@ export default class Binder {
       var assignment = Route.select(view, name.split('-'));
       assignment.assign(selection);
     }
-    var scope = view.hasAttribute(Binder.ATTRIBUTE) ? data.select(view.getAttribute(Binder.ATTRIBUTE)?.split('.')) : data;
+    const scope = view.hasAttribute(Binder.ATTRIBUTE) ? data.select(view.getAttribute(Binder.ATTRIBUTE)?.split('.')) : data;
     for (var child of [...view.childNodes]) {
       this.bind(child, scope);
     }
