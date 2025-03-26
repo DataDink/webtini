@@ -4,7 +4,7 @@
 
 * [source](https://github.com/datadink/webtini)
 * [documentation](https://datadink.github.io/webtini)
-* <a href="https://datadink.github.io/webtini/standard-binder-package.zip" download>download (latest)</a>
+* [download latest](https://datadink.github.io/webtini/standard-binder-package.zip)
 
 Similarities to `knockout` and `vue` but smaller and rawer.
 
@@ -119,6 +119,8 @@ Similarities to `knockout` and `vue` but smaller and rawer.
 
 Includes all standard modules
 
+[download](https://datadink.github.io/webtini/standard-binder-package.zip)
+
 ```html
 <!-- to pull directly from github (not for production) -->
 <script src="https://datadink.github.io/webtini/standard-binder-package.min.js"></script>
@@ -141,6 +143,8 @@ import StandardBinder from 'https://datadink.github.io/webtini/StandardBinder.js
 ### Minimal
 
 Provides basic model binding, content generation & interactivity
+
+[download](https://datadink.github.io/webtini/minimal-binder-package.zip)
 
 ```html
 <!-- to pull directly from github (not for production) -->
