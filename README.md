@@ -58,7 +58,7 @@ Similarities to `knockout` and `vue` but smaller and rawer.
       </template>
     </div>
     <script type="module">
-      // The application is a viewmodel that the web view can be bound to using the Binder.
+      // An application is a viewmodel that the web view can be bound to using a `Binder`.
       // It exposes data and functionality for the view to bind to.
       class Application {
         // Binders are the engines for webtini applications.
