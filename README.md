@@ -120,7 +120,7 @@ Includes all standard modules
 
 ```html
 <!-- to pull directly from github (not for production) -->
-<script src="https://datadink.github.io/webtini/packages/standard-binder-package.min.js"></script>
+<script src="https://datadink.github.io/webtini/standard-binder-package.min.js"></script>
 ```
 
 ```javascript
@@ -143,7 +143,7 @@ Provides basic model binding, content generation & interactivity
 
 ```html
 <!-- to pull directly from github (not for production) -->
-<script src="https://datadink.github.io/webtini/packages/minimal-binder-package.min.js"></script>
+<script src="https://datadink.github.io/webtini/minimal-binder-package.min.js"></script>
 ```
 
 ```javascript
