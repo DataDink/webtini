@@ -2,6 +2,9 @@
 
 *minimalistic view modeling framework*
 
+* [documentation](https://datadink.github.io/webtini/docs)
+* [source](https://github.com/datadink/webtini)
+
 Similarities to `knockout` and `vue` but smaller and rawer.
 
 * Minimalistic
