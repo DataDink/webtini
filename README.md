@@ -1,12 +1,14 @@
 # webtini
 
+> ![WARNING] Nothing here is fully tested yet. Use at your own risk.
+
 *minimalistic view modeling framework*
 
 * [download latest](https://datadink.github.io/webtini/standard-binder-package.zip)
 * [documentation](https://datadink.github.io/webtini)
 * [source](https://github.com/datadink/webtini)
 
-Similarities to `knockout` and `vue` but smaller and rawer.
+*similarities to `knockout` and `vue` but smaller and rawer*
 
 * Minimalistic
 * Conformant
@@ -14,8 +16,7 @@ Similarities to `knockout` and `vue` but smaller and rawer.
 * Unobtrusive
 * Modular
 
-> ![WARNING]
-> Nothing is fully tested yet. Use at your own risk.
+*the modern web doesn't need to be obfuscated and compiled*
 
 # Quick Start
 
@@ -110,6 +111,8 @@ Similarities to `knockout` and `vue` but smaller and rawer.
 </html>
 ```
 
+*use web technologies as-is and as they're meant to be*
+
 # Packages
 
 ### Standard
@@ -158,7 +161,9 @@ import MinimalBinder from 'https://datadink.github.io/webtini/MinimalBinder.js';
 * TemplateBinder
 * EventBinder
 
-# Modules
+# The Default Extensions
+
+*webtini is modular & extensible - use as much or little as you like*
 
 ### AttributeBinder
 
@@ -212,19 +217,29 @@ Enables familiar inline `{data.property}` binding from within text.
 <h1>Page: {title}</h1>
 ```
 
+*constomize webtini with your own extensions*
+
 # FAQ
 
 * When does it make sense to use this?
   * When you need something fast with little effort.
+* What is the benefit?
+  * This package helps to keep web development simple, clean and extensible.
+  * Modern web technologies no longer need massive processing efforts such as transpiling from something else.
+  * By working with & along-side modern web patterns & practices it is easier to prevent your code from becoming obsolete.
+  * MVVM and similar patterns help keep concerns decoupled and modular.
 * Can this be used for large applications?
   * Yes. 
 * Does this work on legacy browsers?
   * No: webtini targets modern browsers only
 * Is it performant?
   * Depends: webtini leaves performance up to you. You have full control over the render/update loop, etc.
+  * Typically, web applications do not need extreme performance and there's no framework in the world that doesn't add overhead to your application.
 * Does it scale?
   * Depends: webtini only focuses on connecting your view with your data & functionality. The scalability of the app you write is up to you.
+  * Because of webtini's extensible design, it can be easily customized, optimized and you can even contribute here if you've got something useful!
 * What do I have to learn?
-  * Raw javascript, html, css, etc.
+  * Just good-ol', raw javascript, html, and css.
+  * Understanding data-driven patterns like MVVM will help a lot.
 * How does this fit in with REACT?
-  * It doesn't. React obfuscates web technologies. webtini embraces them.
+  * It doesn't. React obfuscates and tangles web technologies. webtini embraces them.
