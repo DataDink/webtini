@@ -2,8 +2,8 @@
 
 *minimalistic view modeling framework*
 
-* [documentation](https://datadink.github.io/webtini/docs)
 * [source](https://github.com/datadink/webtini)
+* [documentation](https://datadink.github.io/webtini)
 
 Similarities to `knockout` and `vue` but smaller and rawer.
 
@@ -76,7 +76,7 @@ Similarities to `knockout` and `vue` but smaller and rawer.
         // for each item.
         links = [
           { text: 'source',  url: 'https://github.com/datadink/webtini' },
-          { text: 'documentation',  url: 'https://datadink.github.io/webtini/docs' },
+          { text: 'documentation',  url: 'https://datadink.github.io/webtini' },
         ];
 
         // A coordinated data value that multiple parts of the application use
