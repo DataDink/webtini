@@ -23,10 +23,11 @@ Similarities to `knockout` and `vue` but smaller and rawer.
 <html>
   <head>
     <title>webtini quick-start</title>
+    <script src="https://datadink.github.io/webtini/standard-binder-package.min.js"></script>
     <!-- A style to hide the page until its ready -->
     <style>.loading { display: none; }</style>
   </head>
-  <!-- Bind the "loading" class to the isLoading property on the Application -->
+  <!-- Binds the "loading" class to the isLoading property on the Application -->
   <body class="loading" bind-class-loading="isLoading">
     <header>
       <!-- Binds to the "title" property on the application -->
@@ -57,14 +58,10 @@ Similarities to `knockout` and `vue` but smaller and rawer.
       </template>
     </div>
     <script type="module">
-      // Binders are the engines for webtini applications.
-      // The StandardBinder includes all standard modules / functionality.
-      import StandardBinder from 'https://datadink.github.io/webtini/StandardBinder.js'; // NOTE: Be aware of COORS
-
       // The application is a viewmodel that the web view can be bound to using the Binder.
-      // It defines all of the exposed data & functionality for binding from the view.
+      // It exposes data and functionality for the view to bind to.
       class Application {
-        // Instance of the binder to be used with this application
+        // Binders are the engines for webtini applications.
         binder = new StandardBinder();
 
         // The body's "loading" class is bound to this value
