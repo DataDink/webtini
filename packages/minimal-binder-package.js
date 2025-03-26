@@ -14,7 +14,7 @@ this.Route = class Route {
   constructor(root = null) { (this.#root = this.#last = this).#value = root; }
   *[Symbol.iterator]() { for (var node = this.#root; node; node = node.#next) { yield node; } }
   append(name, value) {
-    var next = this.#next = new Route();
+    const next = this.#next = new Route();
     next.#name = name;
     next.#value = value;
     next.#root = this.#root;
@@ -23,15 +23,15 @@ this.Route = class Route {
     return next;
   }
   clone() {
-    var clone = new Route(this.value);
-    for (var node = this.#next; node; node = node.#next) {
+    var clone = new Route(this.#root.#value);
+    for (var node = this.#root.#next; node; node = node.#next) {
       clone = clone.append(node.#name, node.#value);
     }
     return clone;
   }
   static find(data, name) {
     if (data == null || name in data) { return name; }
-    var lower = name.toLowerCase();
+    const lower = name.toLowerCase();
     for (var key in data) { if (key.toLowerCase() === lower) { return key; } }
     return name;
   }
@@ -42,7 +42,7 @@ this.Route = class Route {
       else if (m === '~') { r = r.#root; r.#last = r; r.#next = null; }
       else if (m === '^') { r = r.#parent ?? r; r.#root.#last = r; r.#next = null; }
       else {
-        var name = Route.find(r.#value, m);
+        const name = Route.find(r.#value, m);
         r = r.append(name, r.#value?.[name]); 
       }
       return r;
@@ -51,14 +51,14 @@ this.Route = class Route {
   assign(value) { return Route.assign(this, value); }
   static assign(route, value) {
     if (!(route instanceof Route)) { throw new Error('Route.assign: route must be an instance of a Route.'); }
-    var result = new Route(route.#root.#value);
-    if (route.root.next == null || result.value == null) { return result; }
+    var update = new Route(route.#root.#value);
+    if (route.root.next == null || update.value == null) { return update; }
     for (var node = route.root.next; node; node = node.next) {
-      var name = Route.find(result.value, node.name);
-      result = result.append(name, result.value[name] ?? (result.value[name] = {}));
+      var name = Route.find(update.value, node.name);
+      update = update.append(name, update.value[name] ??= {});
     }
-    result.#value = result.parent.value[result.name] = value;
-    return result;
+    update.#value = update.data[update.name] = value;
+    return update;
   }
 }
 })();
@@ -88,7 +88,7 @@ this.Binder = class Binder {
       var assignment = Route.select(view, name.split('-'));
       assignment.assign(selection);
     }
-    var scope = view.hasAttribute(Binder.ATTRIBUTE) ? data.select(view.getAttribute(Binder.ATTRIBUTE)?.split('.')) : data;
+    const scope = view.hasAttribute(Binder.ATTRIBUTE) ? data.select(view.getAttribute(Binder.ATTRIBUTE)?.split('.')) : data;
     for (var child of [...view.childNodes]) {
       this.bind(child, scope);
     }
@@ -112,11 +112,11 @@ this.TemplateBinder = class TemplateBinder extends Binder.Extension {
     if (element[TemplateBinder.#instance]) { return true; }
     if (!(element instanceof HTMLTemplateElement)) { return false; }
     route = element.hasAttribute(Binder.ATTRIBUTE) ? route.select(element.getAttribute(Binder.ATTRIBUTE)?.split('.')) : route;
-    var recurse = element.hasAttribute(Binder.ATTRIBUTE) && element.hasAttribute(TemplateBinder.RECURSE);
-    var items = route.result == null ? []
+    const recurse = element.hasAttribute(Binder.ATTRIBUTE) && element.hasAttribute(TemplateBinder.RECURSE);
+    const items = route.result == null ? []
               : Array.isArray(route.result) ? route.result.map((v,i) => route.clone().append(i.toString(), v))
               : [route];
-    var instances = element[TemplateBinder.#instances] ??= [];
+    const instances = element[TemplateBinder.#instances] ??= [];
     while (instances.length > items.length) {
       var instance = instances.pop();
       for (var e of instance) {
@@ -136,7 +136,7 @@ this.TemplateBinder = class TemplateBinder extends Binder.Extension {
         element.parentNode.insertBefore(e, insert);
       }
       if (recurse) { 
-        var recursion = element.cloneNode(true);
+        const recursion = element.cloneNode(true);
         instance.push(recursion);
         element.parentNode.insertBefore(recursion, insert);
       }
@@ -159,9 +159,9 @@ this.EventBinder = class EventBinder extends Binder.Extension {
   static #events = Symbol('events');
   handleAttribute(binder, element, route, name, value) {
     if (!name.startsWith(EventBinder.PREFIX)) { return false; }
-    var event = name.substring(EventBinder.PREFIX.length);
-    var events = element[EventBinder.#events] ??= {};
-    var handler = route.select(value.split('.'));
+    const event = name.substring(EventBinder.PREFIX.length);
+    const events = element[EventBinder.#events] ??= {};
+    const handler = route.select(value.split('.'));
     if (event in events 
       && events[event].data === handler.data 
       && events[event].handler === events[event].result) { 
@@ -172,7 +172,7 @@ this.EventBinder = class EventBinder extends Binder.Extension {
       delete events[event];
     }
     if (typeof(handler.result) !== 'function') { return true; }
-    var context = events[event] = { 
+    const context = events[event] = { 
       data: handler.data, 
       handler: handler.result,
       binding: function() {
