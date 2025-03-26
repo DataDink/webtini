@@ -134,7 +134,8 @@ import StandardBinder from 'https://datadink.github.io/webtini/StandardBinder.js
 * ClassBinder
 * EventBinder
 * StyleBinder
-* TempalteBinder
+* TemplateBinder
+* TextBinder
 
 ### Minimal
 
@@ -199,6 +200,14 @@ Causes `HTMLTemplateElement`s to generate content when bound to an array
 
 ```javascript
 binder.bind(element, { data: { context: { items: [{name: 'a'}, {name: 'b'}] } } });
+```
+
+### TextBinder
+
+Enables familiar inline `{data.property}` binding from within text.
+
+```html
+<h1>Page: {title}</h1>
 ```
 
 # FAQ
