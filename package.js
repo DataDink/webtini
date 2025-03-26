@@ -25,12 +25,16 @@ for (var pkg of packages.map(p => PATH.resolve(p))) {
       .map(m => m[1])
       .map(d => PATH.resolve(PATH.dirname(file.path), d));
     for (var dep of file.deps.filter(d => !files.some(f => f.path === d))) { files.push({path: dep}); }
-    // HACK: Regexing files from a modules to closures. The file must export a default class & use simple imports.
+    // HACK: Regexing files from modules to closures. Expects files to export a default class & use simple imports.
     // NOTE: Exported classes will be public/global and must be unique.
     file.text = '\n(function() {\n'
       + file.text
+        .replace(/\/\/.*$/gm, '') // line comments
+        .replace(/\/\*[\s\S]*?\*\//g, '') // block comments
+        .replace(/(\n\s+$)+/gm, '\n') // blank lines
+        .replace(/[\r\n]+/g, '\n') // empty lines
         .replace(/^\s*import\s.+?$/gm, '') // imports
-        .replace(/^\s*export\s+default\s+class\s+(\w+)/m, 'this.$1 = class $1') // `export default class ClassName` to `this.ClassName = class ClassName`
+        .replace(/^\s*export\s+default\b[\s\S]+?\bclass\s+(\w+)/m, 'this.$1 = class $1') // `export default class ClassName` to `this.ClassName = class ClassName`
       + '\n})();\n';
   }
   var pack = '';

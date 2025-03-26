@@ -9,11 +9,12 @@ import StyleBinder from './src/StyleBinder.js';
 import ClassBinder from './src/ClassBinder.js';
 import AttributeBinder from './src/AttributeBinder.js';
 
+export default 
 /**
  * @class StandardBinder
  * @description A standard binder with all the default extensions.
  */
-export default class StandardBinder extends Binder {
+class StandardBinder extends Binder {
   constructor(...extensions) {
     super(
       ...extensions,

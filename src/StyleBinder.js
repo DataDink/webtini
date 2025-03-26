@@ -6,10 +6,11 @@
 import Route from './Route.js';
 import Binder from './Binder.js';
 
+export default 
 /**
  * @class StyleBinder
- * @description Enables the use of style binding attributes.
  * @memberof module:StyleBinder
+ * @description Enables the use of style binding attributes.
  * @example
  * ```html
  * <html>
@@ -19,9 +20,10 @@ import Binder from './Binder.js';
  * </html>
  * ```
  */
-export default class StyleBinder extends Binder.Extension {
+class StyleBinder extends Binder.Extension {
   /**
    * @property PREFIX
+   * @memberof module:StyleBinder.StyleBinder
    * @description The prefix for identifying style binding attributes.
    * @type {string}
    */

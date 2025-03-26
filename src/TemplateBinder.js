@@ -4,10 +4,12 @@
  * @module TemplateBinder
  */
 import Binder from './Binder.js';
+
+export default 
 /**
  * @class TemplateBinder
- * @description Enables the use of {@link HTMLTemplateElement} elements as data-templates.
  * @memberof module:TemplateBinder
+ * @description Enables the use of {@link HTMLTemplateElement} elements as data-templates.
  * @example
  * ```html
  * <html>
@@ -30,23 +32,16 @@ import Binder from './Binder.js';
  * binder.bind(document.body, model);
  * ```
  */
-export default class TemplateBinder extends Binder.Extension {
+class TemplateBinder extends Binder.Extension {
   /**
    * @property RECURSE
+   * @memberof module:TemplateBinder.TemplateBinder
    * @description The attribute for defining recursive data-templates.
    * @type {string}
    */
   static get RECURSE() { return 'recurse'; }
   static #instances = Symbol('template-instances');
   static #instance = Symbol('template-instance');
-  /**
-   * @method handleElement
-   * @description Binds an {@link HTMLTemplateElement} to a data model.
-   * @param {Binder} binder
-   * @param {HTMLElement} element
-   * @param {Route} route
-   * @returns {boolean}
-   */
   handleElement(binder, element, route) {
     if (element[TemplateBinder.#instance]) { return true; }
     if (!(element instanceof HTMLTemplateElement)) { return false; }

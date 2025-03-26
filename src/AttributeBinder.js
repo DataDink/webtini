@@ -5,10 +5,11 @@
  */
 import Binder from './Binder.js';
 
+export default 
 /**
  * @class AttributeBinder
- * @description Enables the use of attribute binding attributes.
  * @memberof module:AttributeBinder
+ * @description Enables the use of attribute binding attributes.
  * @example
  * ```html
  * <html>
@@ -19,10 +20,10 @@ import Binder from './Binder.js';
  * </html>
  * ```
  */
-export default class AttributeBinder extends Binder.Extension {
+class AttributeBinder extends Binder.Extension {
   /**
    * @property PREFIX
-   * @member {string} module:AttributeBinder.PREFIX
+   * @memberof module:AttributeBinder.AttributeBinder
    * @description The prefix for identifying attribute binding attributes.
    * @type {string}
    */

@@ -4,14 +4,14 @@
 
 Similarities to `knockout` and `vue` but smaller and rawer.
 
-* Declarative
-* Modular
-* Conformant
-* Unobtrusive
 * Minimalistic
+* Conformant
+* Declarative
+* Unobtrusive
+* Modular
 
 > ![WARNING]
-> Nothing is fully documented or tested yet. Use at your own risk.
+> Nothing is fully tested yet. Use at your own risk.
 
 # Quick Start
 

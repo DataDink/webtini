@@ -5,10 +5,11 @@
  */
 import Binder from './Binder.js';
 
+export default 
 /**
  * @class ClassBinder
- * @description Enables the use of class name binding attributes.
  * @memberof module:ClassBinder
+ * @description Enables the use of class name binding attributes.
  * @example
  * ```html
  * <html>
@@ -19,9 +20,10 @@ import Binder from './Binder.js';
  * </html>
  * ```
  */
-export default class ClassBinder extends Binder.Extension {
+class ClassBinder extends Binder.Extension {
   /**
    * @property PREFIX
+   * @memberof module:ClassBinder.ClassBinder
    * @description The prefix for identifying class name binding attributes.
    * @type {string}
    */

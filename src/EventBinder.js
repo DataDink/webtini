@@ -5,10 +5,11 @@
  */
 import Binder from './Binder.js';
 
+export default 
 /**
  * @class EventBinder
- * @description Enables the use of event binding attributes.
  * @memberof module:EventBinder
+ * @description Enables the use of event binding attributes.
  * @example
  * ```html
  * <html>
@@ -18,9 +19,10 @@ import Binder from './Binder.js';
  * </html>
  * ```
  */
-export default class EventBinder extends Binder.Extension {
+class EventBinder extends Binder.Extension {
   /**
    * @property PREFIX
+   * @memberof module:EventBinder.EventBinder
    * @description The prefix for identifying event binding attributes.
    * @type {string}
    */

@@ -4,37 +4,18 @@
  * @module Binder
  */
 import Route from './Route.js';
-/**
- * @description The core of webtini functionality. Renders a view using a data model.
- * @member module:Binder
- * @example
- * ```html
- * <html>
- *  <body>
- *    <h1 bind-textcontent="title"></h1>
- *    <p bind-textcontent="content"></p>
- *  </body>
- * </html>
- * ```
- * 
- * ```javascript
- * var datamodel = {
- *  title: 'The Page Title',
- *  content: 'The page content',
- * };
- * var binder = new Binder();
- * binder.bind(document.body, data)
- * ```
- */
+
 export default class Binder {
   /**
-   * @member {string} module:Binder.ATTRIBUTE
+   * @property ATTRIBUTE
+   * @memberof module:Binder.Binder
    * @description The attribute for defining the data scope for descendant elements.
    * @type {string}
    */
   static get ATTRIBUTE() { return 'bind'; }
   /**
-   * @member {string} module:Binder.PREFIX
+   * @property PREFIX
+   * @memberof module:Binder.Binder
    * @description The prefix for identifying binding attributes.
    * @type {string}
    */
@@ -42,7 +23,8 @@ export default class Binder {
 
   #active = 0;
   /**
-   * @member {boolean} module:Binder.active
+   * @property active
+   * @memberof module:Binder.Binder
    * @description Indicates whether the binder is currently processing a view.
    * @type {boolean}
    */
@@ -50,9 +32,28 @@ export default class Binder {
 
   #extensions = [];
   /**
-   * @constructor
-   * @description Creates a new instance of the Binder class with optional extensions.
+   * @class Binder
+   * @memberof module:Binder
+   * @description The core of webtini functionality. Renders a view using a data model.
    * @param  {...Binder.Extension} extensions 
+   * @example
+   * ```html
+   * <html>
+   *  <body>
+   *    <h1 bind-textcontent="title"></h1>
+   *    <p bind-textcontent="content"></p>
+   *  </body>
+   * </html>
+   * ```
+   * 
+   * ```javascript
+   * var datamodel = {
+   *  title: 'The Page Title',
+   *  content: 'The page content',
+   * };
+   * var binder = new Binder();
+   * binder.bind(document.body, data)
+   * ```
    * @example
    * ```javascript
    * import {TemplateBinder} from './TemplateBinder.js';
@@ -70,7 +71,8 @@ export default class Binder {
   constructor(...extensions) { this.#extensions = extensions ?? []; }
 
   /**
-   * @member {function} module:Binder.bind
+   * @function bind
+   * @memberof module:Binder.Binder
    * @description Renders the view using the data.
    * @param {Element} view 
    * @param {*} data 
@@ -100,8 +102,10 @@ export default class Binder {
     this.#active--;
     return view;
   }
+  static Extension = 
   /**
-   * @member module:Binder.Extension
+   * @class Extension
+   * @memberof module:Binder.Binder
    * @description An interface for extending the functionality of the {@link Binder} class.
    * @example
    * ```javascript
@@ -115,9 +119,10 @@ export default class Binder {
    *   }
    * }
    */
-  static Extension = class Extension {
+  class Extension {
     /**
-     * @member {function} module:Binder.Extension.handleElement
+     * @function handleElement
+     * @memberof module:Binder.Binder.Extension
      * @description A method for handling descendant elements.
      * @param {Binder} binder 
      * @param {Element} element 
@@ -126,7 +131,8 @@ export default class Binder {
      */
     handleElement(binder, element, route) { return false; }
     /**
-     * @member {function} module:Binder.Extension.handleAttribute
+     * @function handleAttribute
+     * @memberof module:Binder.Binder.Extension
      * @description A method for handling an attribute on an element
      * @param {Binder} binder 
      * @param {Element} element 
