@@ -161,7 +161,7 @@ import MinimalBinder from 'https://datadink.github.io/webtini/MinimalBinder.js';
 * TemplateBinder
 * EventBinder
 
-# The Default Extensions
+# Basic Binder Functions
 
 *webtini is modular & extensible - use as much or little as you like*
 
