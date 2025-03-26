@@ -6,12 +6,9 @@ import UGLIFY from 'uglify-js';
 /* NOTE: This script expects code files to have a certain formatting. */
 /* TODO: Re-evaluate a better packing solution later. */
 
-const exportPath = 'packages'; // Where to put the packed files
-const packages = FS.readdirSync('binders').map(f => `./binders/${f}`); // Files to pack
-
-// Clear the old
-FS.rmSync(exportPath, { recursive: true, force: true });
-FS.mkdirSync(exportPath, { recursive: true });
+const importPath = 'packages'; // Where to find the binders
+const exportPath = 'docs'; // Where to put the packed files
+const packages = FS.readdirSync(importPath).map(f => PATH.join(importPath, f)); // Files to pack
 
 for (var pkg of packages.map(p => PATH.resolve(p))) {
   var files = [{path: pkg}]; // until all dependencies are loaded
