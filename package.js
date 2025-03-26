@@ -7,10 +7,7 @@ import UGLIFY from 'uglify-js';
 /* TODO: Re-evaluate a better packing solution later. */
 
 const exportPath = 'packages'; // Where to put the packed files
-const packages = [ // The binders to pack.
-  'MinimalBinder.js',
-  'StandardBinder.js',
-];
+const packages = FS.readdirSync('binders').map(f => `./binders/${f}`); // Files to pack
 
 // Clear the old
 FS.rmSync(exportPath, { recursive: true, force: true });
