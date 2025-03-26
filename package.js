@@ -1,6 +1,7 @@
 import FS from 'fs';
 import PATH from 'path';
 import UGLIFY from 'uglify-js';
+import { execSync } from 'child_process';
 
 /* HACK: At the time of this, the usual suspects (browserify, etc) were not getting the job done in a reasonable manner. */
 /* NOTE: This script expects code files to have a certain formatting. */
@@ -42,4 +43,5 @@ for (var pkg of packages.map(p => PATH.resolve(p))) {
   FS.writeFileSync(PATH.resolve(exportPath, name + '.js'), pack);
   var minified = UGLIFY.minify(pack, { keep_fnames: true }).code;
   FS.writeFileSync(PATH.resolve(exportPath, name + '.min.js'), minified);
+  execSync(`zip ${PATH.resolve(exportPath, name + '.min.js.zip')} ${PATH.resolve(exportPath, name + '.min.js')}`);
 }
