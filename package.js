@@ -43,5 +43,6 @@ for (var pkg of packages.map(p => PATH.resolve(p))) {
   FS.writeFileSync(PATH.resolve(exportPath, name + '.js'), pack);
   var minified = UGLIFY.minify(pack, { keep_fnames: true }).code;
   FS.writeFileSync(PATH.resolve(exportPath, name + '.min.js'), minified);
-  execSync(`zip ${PATH.resolve(exportPath, name + '.min.js.zip')} ${PATH.join(exportPath, name + '.min.js')}`);
+  var download = PATH.resolve(exportPath, `${name}.zip`);
+  execSync(`zip ${download} ${PATH.join(exportPath, name + '.min.js')}`);
 }
