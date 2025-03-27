@@ -1,14 +1,14 @@
 # webtini
 
-> ![WARNING] Nothing here is fully tested yet. Use at your own risk.
+**WARNING:** *Nothing here is fully tested yet. Use at your own risk.*
 
-*minimalistic view modeling framework*
+> *minimalistic view modeling framework*
 
 * [download latest](https://datadink.github.io/webtini/standard-binder-package.zip)
 * [documentation](https://datadink.github.io/webtini)
 * [source](https://github.com/datadink/webtini)
 
-*similarities to `knockout` and `vue` but smaller and rawer*
+> *similarities to `knockout` and `vue` but smaller and rawer*
 
 * Minimalistic
 * Conformant
@@ -16,9 +16,9 @@
 * Unobtrusive
 * Modular
 
-*the modern web doesn't need to be obfuscated and compiled*
-
 # Quick Start
+
+> *the modern web doesn't need to be obfuscated and compiled*
 
 ```html
 <html>
@@ -111,9 +111,9 @@
 </html>
 ```
 
-*use web technologies as-is and as they're meant to be*
-
 # Packages
+
+> *use the web as-is and as it's meant to be*
 
 ### Standard
 
@@ -161,9 +161,9 @@ import MinimalBinder from 'https://datadink.github.io/webtini/MinimalBinder.js';
 * TemplateBinder
 * EventBinder
 
-# Basic Binder Functions
+# Basic Binder Components
 
-*webtini is modular & extensible - use as much or little as you like*
+> *webtini is modular & extensible - use as much or little as you like*
 
 ### AttributeBinder
 
@@ -217,9 +217,9 @@ Enables familiar inline `{data.property}` binding from within text.
 <h1>Page: {title}</h1>
 ```
 
-*constomize webtini with your own extensions*
-
 # FAQ
+
+> *constomize webtini to work the way you want*
 
 * When does it make sense to use this?
   * When you need something fast with little effort.
@@ -241,5 +241,7 @@ Enables familiar inline `{data.property}` binding from within text.
 * What do I have to learn?
   * Just good-ol', raw javascript, html, and css.
   * Understanding data-driven patterns like MVVM will help a lot.
+* Can I use typescript?
+  * As far as I know.
 * How does this fit in with REACT?
   * It doesn't. React obfuscates and tangles web technologies. webtini embraces them.
