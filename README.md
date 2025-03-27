@@ -222,7 +222,7 @@ Enables familiar inline `{data.property}` binding from within text.
 > *constomize webtini to work the way you want*
 
 * When does it make sense to use this?
-  * When you need something fast with little effort.
+  * When you need something right now with little effort and no overhead.
 * What is the benefit?
   * This package helps to keep web development simple, clean and extensible.
   * Modern web technologies no longer need massive processing efforts such as transpiling from something else.
