@@ -105,23 +105,25 @@ this.Binder = class Binder {
 
 (function() {
 this.TextBinder = class TextBinder extends Binder.Extension {
-  static #text = Symbol('textContent');
+  static #parse = Symbol('parse');
   handleElement(binder, element, route) {
     if (!(element instanceof Text)) { return false; }
-    const text = element[TextBinder.#text] ??= element.textContent;
-    const bindings = [...text.matchAll(/\{\{|\}\}|\{([^\}]+)\}/g)];
-    if (!bindings.length) { return true; }
-    var format = '';
-    for (var i = 0; i < bindings.length; i++) {
-      var previous = bindings[i-1];
-      var binding = bindings[i];
-      format += text.substring(previous ? previous.index + previous[0].length : 0, binding.index);
-      format += binding[1] == null ? binding[0][0] : route.select(binding[1].split('.')).result?.toString() ?? '';
-    }
-    var last = bindings.at(-1);
-    format += text.substring(last.index + last[0].length);
-    element.textContent = format;
+    const parse = element[TextBinder.#parse] ??= TextBinder.parse(element.textContent);
+    if (!parse.length) { return true; }
+    const format = parse
+      .map(p => `${p.text}${p.selector ? route.select(p.selector.split('.')).result?.toString() ?? '' : ''}`)
+      .join('');
+    if (element.textContent !== format) { element.textContent = format; }
     return true;
+  }
+  static parse(text) {
+    var matches = [...text.matchAll(/\{\{|\}\}|\{([^\}]+)\}/g)];
+    if (matches.length === 0) { return []; }
+    return matches.map((m,i) => ({
+      text: text.substring(i > 0 ? matches[i-1].index + matches[i-1][0].length : 0, m.index)
+          + (m[0] === '{{' ? '{' : m[0] === '}}' ? '}' : ''),
+      selector: m[1] ? m[1].trim() : null
+    })).concat([{ text: text.substring(matches.at(-1).index + matches.at(-1)[0].length) }]);
   }
 }
 })();
