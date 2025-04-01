@@ -3,12 +3,16 @@
   "version": "1.0.0",
   "description": "minimalistic web application framework",
   "type": "module",
-  "main": "package.js",
-  "scripts": {},
+  "main": "stage.sh",
+  "scripts": {
+    "test": "node test.js",
+    "stage": "sh stage.sh"
+  },
   "author": "greenwald",
   "license": "SEE LICENSE IN LICENSE",
   "devDependencies": {
     "jsdoc": "^4.0.4",
+    "rollup": "^4.38.0",
     "uglify-js": "^3.19.3"
   }
 }

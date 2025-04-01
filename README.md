@@ -4,7 +4,7 @@
 
 > *minimalistic view modeling framework*
 
-* [download latest](https://datadink.github.io/webtini/standard-binder-package.zip)
+* [download latest](https://datadink.github.io/webtini/standard-binder.zip)
 * [documentation](https://datadink.github.io/webtini)
 * [source](https://github.com/datadink/webtini)
 
@@ -119,7 +119,7 @@
 
 Includes all standard modules
 
-[download](https://datadink.github.io/webtini/standard-binder-package.zip)
+[download](https://datadink.github.io/webtini/standard-binder.zip)
 
 ```html
 <!-- to pull directly from github (not for production) -->
@@ -144,7 +144,7 @@ import StandardBinder from 'https://datadink.github.io/webtini/StandardBinder.js
 
 Provides basic model binding, content generation & interactivity
 
-[download](https://datadink.github.io/webtini/minimal-binder-package.zip)
+[download](https://datadink.github.io/webtini/minimal-binder.zip)
 
 ```html
 <!-- to pull directly from github (not for production) -->
