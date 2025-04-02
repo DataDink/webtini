@@ -1,6 +1,14 @@
 import Route from '../src/Route.js';
 import run from './run.js';
 
+run('new Route w/no arguments', {Route}, () => { 
+  assert.succeeds(() => new Route(), 'should create a new Route without arguments');
+});
+
+run('new Route with value', {Route}, () => {
+  assert.succeeds(() => new Route(123), 'should create a new Route with a value of 123');
+});
+
 run('Route.find finds match', {Route}, () => {
   const data = { Test: 123 };
   assert.equal(Route.find(data, 'Test'), 'Test', 'should find exact match');
