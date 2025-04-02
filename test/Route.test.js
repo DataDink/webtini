@@ -56,3 +56,21 @@ run('Route.index returns last.name', {Route}, () => {
   assert.equal(root.result, data, 'result should be the result value');
   assert.equal(root.data, root.value, 'data should be the parent value');
 });
+
+run('Route.value returns the node value', {Route}, () => {
+  const root = new Route(123);
+  const next = root.append('test', 456);
+  assert.equal(root.value, 123, 'root value should be 123');
+  assert.equal(next.value, 456, 'next value should be 456');
+});
+
+run('Route.next and Route.parent and Route.root and Route.last', {Route}, () => {
+  const root = new Route(123);
+  const next = root.append('test', 456);
+  assert.equal(root.next, next, 'root next should point to the first child');
+  assert.equal(next.parent, root, 'next parent should point to root');
+  assert.equal(root.last, next, 'root last should point to the last child');
+  assert.equal(next.last, next, 'next last should point to itself');
+  assert.equal(root.root, root, 'root should point to itself as root');
+  assert.equal(next.root, root, 'next should point to root as well');
+});
