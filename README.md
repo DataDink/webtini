@@ -5,7 +5,7 @@
 * [download latest](https://datadink.github.io/webtini/standard-binder.zip)
 * [documentation](https://datadink.github.io/webtini)
 * [source](https://github.com/datadink/webtini)
-* [tests](https://github.com/datadink/webtini/test-results.html)
+* [tests](https://datadink.github.io/webtini/test-results.html)
 
 > *similarities to `knockout` and `vue` but smaller and rawer*
 
