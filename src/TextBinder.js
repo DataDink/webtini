@@ -46,7 +46,7 @@ class TextBinder extends Binder.Extension {
    * @returns {Array}
    */
   static parse(text) {
-    var matches = [...text.matchAll(/\{\{|\}\}|\{([^\}]+)\}/g)];
+    var matches = [...(text??'').matchAll(/\{\{|\}\}|\{([^\}]+)\}/g)];
     if (matches.length === 0) { return []; }
     return matches.map((m,i) => ({
       text: text.substring(i > 0 ? matches[i-1].index + matches[i-1][0].length : 0, m.index)

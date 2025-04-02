@@ -33,7 +33,7 @@ class StyleBinder extends Binder.Extension {
     const style = Route.find(element.style, name.substring(StyleBinder.PREFIX.length));
     const setting = route.select(value.split('.')).result?.toString();
     if (element.style[style] === setting) { return true; }
-    element.style[style] = setting;
+    element.style[style] = setting ?? '';
     return true;
   }
 }

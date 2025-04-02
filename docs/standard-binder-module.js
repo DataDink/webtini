@@ -110,7 +110,7 @@ class TextBinder extends Binder.Extension {
     return true;
   }
   static parse(text) {
-    var matches = [...text.matchAll(/\{\{|\}\}|\{([^\}]+)\}/g)];
+    var matches = [...(text??'').matchAll(/\{\{|\}\}|\{([^\}]+)\}/g)];
     if (matches.length === 0) { return []; }
     return matches.map((m,i) => ({
       text: text.substring(i > 0 ? matches[i-1].index + matches[i-1][0].length : 0, m.index)
@@ -203,7 +203,7 @@ class StyleBinder extends Binder.Extension {
     const style = Route.find(element.style, name.substring(StyleBinder.PREFIX.length));
     const setting = route.select(value.split('.')).result?.toString();
     if (element.style[style] === setting) { return true; }
-    element.style[style] = setting;
+    element.style[style] = setting ?? '';
     return true;
   }
 }
