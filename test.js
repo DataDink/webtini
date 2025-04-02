@@ -1,5 +1,5 @@
 // HACK: Runs tests on modules in a browser (JSDOM) environment
-// TODO: Re-evaluate next week/month/year when the web community changes its mind about everything again...
+// TODO: Re-evaluate test frameworks next week/month/year when the web community changes its mind about everything again...
 
 import FS from 'fs';
 import PATH from 'path';

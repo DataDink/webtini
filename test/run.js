@@ -1,5 +1,5 @@
 // HACK: A test runner for modules in a browser (JSDOM) environment
-// TODO: Re-evaluate next week/month/year when the web community changes its mind about everything again...
+// TODO: Re-evaluate test frameworks next week/month/year when the web community changes its mind about everything again...
 
 import {JSDOM} from 'jsdom';
 

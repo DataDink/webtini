@@ -130,3 +130,47 @@ run(`Route.select handles non-existent paths`, {Route}, () => {
   assert.equal(route.parent.parent.parent, route.root, 'great-grandparent should be root');
   assert.equal(nodes.length, 4, 'should have 3 nodes in the route');
 });
+
+run('Route.assign fails single Route', {Route}, () => {
+  const root = new Route({ a: { b: { c: 123 } } });
+  const assign = root.assign(456);
+  assert.unequal(assign.root, root, 'assign should be a new instance');
+  assert.same(assign.root.value, root.value, 'roots should be similar');
+  assert.equal([...root].length, [...assign].length, 'should have the same number of nodes in the route');
+  assert.equal([...root].length, 1, 'root should have only one node');
+});
+
+run('Route.assign to valid route', {Route}, () => {
+  const data = { a: { b: { c: 123 } } };
+  const source = new Route(data).select('a.b.c'.split('.'));
+  const assign = source.assign(456);
+  assert.equal([...source].length, [...assign].length, 'should have the same number of nodes in the route');
+  assert.equal([...assign].length, 4, 'assign should have 3 nodes in the route');
+  assert.unequal(assign.root, source.root, 'assign should be a new instance');
+  assert.equal(source.root.value, data, 'roots should have same value');
+  assert.equal(assign.root.value, data, 'roots should have same value');
+  assert.equal([...source][1].value, data.a, 'source.a == model.a');
+  assert.equal([...assign][1].value, data.a, 'assign.a == model.a');
+  assert.equal([...source][2].value, data.a.b, 'assign.a.b should be model.a.b');
+  assert.equal([...assign][2].value, data.a.b, 'assign.a.b should be model.a.b');
+  assert.equal([...source][3].value, 123, 'source.a.b.c should be unchanged');
+  assert.equal([...assign][3].value, 456, 'assign.a.b.c should be new value');
+});
+
+run('Route.assign handles non-existent paths', {Route}, () => {
+  const data = {};
+  const source = new Route(data).select('a.b.c'.split('.'));
+  const assign = source.assign(456);
+  assert.equal([...source].length, [...assign].length, 'should have the same number of nodes in the route');
+  assert.equal([...assign].length, 4, 'assign should have 3 nodes in the route');
+  assert.unequal(assign.root, source.root, 'assign should be a new instance');
+  assert.equal(source.root.value, data, 'roots should have same value');
+  assert.equal(assign.root.value, data, 'roots should have same value');
+  assert.nothing([...source][1].value, 'source.a == nothing');
+  assert.something([...assign][1].value, 'assign.a == something');
+  assert.nothing([...source][2].value, 'assign.a.b == nothing');
+  assert.something([...assign][2].value, 'assign.a.b == something');
+  assert.nothing([...source][3].value, 'source.a.b.c == nothing');
+  assert.equal([...assign][3].value, 456, 'assign.a.b.c should be new value');
+  assert.equal(data.a.b.c, 456, 'data.a.b.c should be created and set to 456');
+});
