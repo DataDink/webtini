@@ -10,7 +10,7 @@
     get value() { return this.#value; } #value;
     get next() { return this.#next; } #next;
     get last() { return this.#root.#last; } #last;
-    get path() { return [...this].map(node => node.name); }
+    get path() { return [...this].slice(1).map(node => node.name); }
     get data() { return this.last.parent?.value; }
     get index() { return this.last.name; }
     get result() { return this.last.value; }
