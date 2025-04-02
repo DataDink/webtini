@@ -79,3 +79,27 @@ run('TextBinder parses escaped braces', () => {
   assert.nothing(results[3].selector, 'Expected fourth part to have no selector');
   assert.equal(results[3].text, '!', 'Expected fourth part text to be "!"');
 });
+
+run('TextBinder.handleElement false for non-Text node', () => {
+  const binder = new TextBinder();
+  const element = document.createElement('div');
+  const result = binder.handleElement(new Binder(), element, new Route());
+  assert.falsey(result, 'Expected handleElement to return false for non-Text node');
+});
+
+run('TextBinder.handleElement true for Text node without bindings', () => {
+  const binder = new TextBinder();
+  const element = document.createTextNode('No bindings here');
+  const result = binder.handleElement(new Binder(), element, new Route());
+  assert.truthy(result, 'Expected handleElement to return true for Text node without bindings');
+  assert.equal(element.textContent, 'No bindings here', 'Expected text content to remain unchanged');
+});
+
+run('TextBinder.handleElement updates Text node with bindings', () => {
+  const binder = new TextBinder();
+  const model = { name: 'Alice', place: 'Wonderland' };
+  const element = document.createTextNode('Hello {name}, welcome to {place}!');
+  const route = new Route(model);
+  binder.handleElement(new Binder(), element, route);
+  assert.equal(element.textContent, 'Hello Alice, welcome to Wonderland!', 'Expected text content to be updated correctly');
+});
