@@ -1,3 +1,4 @@
+node test.js
 rm -rf ./docs
 mkdir ./docs
 sh document.sh

@@ -13,7 +13,7 @@ const testFiles = FS.readdirSync(testPath)
   .map(file => PATH.resolve(testPath, file));
 const testPort = 8765;
 const testCommand = (process.platform === 'darwin' ? 'open': process.platform === 'win32' ? 'start' : 'xdg-open');
-const launch = () => setTimeout(() => exec(`${testCommand} http://localhost:${testPort}/`), 1000);
+const launch = () => setTimeout(() => exec(`${testCommand} http://localhost:${testPort}/`), 250);
 
 console.pass = message => console.log(`\x1b[32m${message}\x1b[0m`);
 console.fail = message => console.error(`\x1b[31m${message}\x1b[0m`);

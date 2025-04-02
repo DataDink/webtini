@@ -220,7 +220,7 @@ Enables familiar inline `{data.property}` binding from within text.
 > *constomize webtini to work the way you want*
 
 * When does it make sense to use this?
-  * When you need something right now with little effort and no overhead.
+  * When you need a web app right now with little effort and no overhead.
 * What is the benefit?
   * This package helps to keep web development simple, clean and extensible.
   * Modern web technologies no longer need massive processing efforts such as transpiling from something else.
@@ -242,4 +242,4 @@ Enables familiar inline `{data.property}` binding from within text.
 * Can I use typescript?
   * As far as I know.
 * How does this fit in with REACT?
-  * It doesn't. React obfuscates and tangles web technologies. webtini embraces them.
+  * It doesn't. React obfuscates and entangles web technologies. webtini embraces them.
