@@ -12,7 +12,6 @@
   "license": "SEE LICENSE IN LICENSE",
   "devDependencies": {
     "jsdoc": "^4.0.4",
-    "jsdom": "^26.0.0",
     "rollup": "^4.38.0",
     "uglify-js": "^3.19.3"
   }

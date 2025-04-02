@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><title>WEBTINI TEST IN PROGRESS</title></head>
+  <body>
+    <script type="module">
+      const suiteName = '{{testSuite}}';
+      const tests = [];
+      window.run = function(description, test) {
+        var result = {
+          description: description,
+          asserts: []
+        };
+        tests.push(result);
+        window.assert = {
+          truthy(value, message) { if (!value) { result.asserts.push(`Expected truthy, was ${value}: ${message ?? ''}`); } },
+          falsey(value, message) { if (value) { result.asserts.push(`Expected falsey, was ${value}: ${message ?? ''}`); } },
+          equal(actual, expected, message) { if (actual !== expected) { result.asserts.push(`Expected ${expected} but got ${actual}: ${message ?? ''}`); } },
+          unequal(actual, expected, message) { if (actual === expected) { result.asserts.push(`Did not expect ${expected} but got it: ${message ?? ''}`); } },
+          same(actual, expected, message) { if (JSON.stringify(actual) !== JSON.stringify(expected)) { result.asserts.push(`Expected similar objects: ${message ?? ''}`); } },
+          different(actual, expected, message) { if (JSON.stringify(actual) === JSON.stringify(expected)) { result.asserts.push(`Expected different objects: ${message ?? ''}`); } },
+          nothing(value, message) { if (value != null) { result.asserts.push(`Expected nothing, but got ${value}: ${message ?? ''}`); } },
+          something(value, message) { if (value == null) { result.asserts.push(`Expected something, but got ${value}: ${message ?? ''}`); } },
+          throws(fn, message) { try { fn(); result.asserts.push(`Expected throw: ${message ?? ''}`); } catch (e) { } },
+          succeeds(fn, message) { try { fn(); } catch (e) { results.failures.push(`Expected success: ${e.message}: ${message ?? ''}`); } }
+        };
+        try {
+          test();
+        } catch (e) {
+          result.asserts.push(`Test threw an error: ${e.message}`);
+        }
+        window.assert = null;
+      }
+      window.run.complete = function() {
+        fetch(location, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            suite: suiteName,
+            tests: tests
+          })
+        }).then(response => {
+          if (!response.ok) {
+            console.error('Failed to send test results:', response.statusText);
+          } else {
+            console.log('Test results sent successfully.');
+          }
+        }).catch(error => {
+          console.error('Error sending test results:', error);
+        }).finally(() => {
+          window.close();
+        });
+      };
+    </script>
+    <script type="module">
+      {{testScript}}
+    </script>
+    <script type="module">
+      window.run.complete();
+    </script>
+  </body>

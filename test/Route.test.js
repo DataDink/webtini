@@ -1,26 +1,25 @@
-import Route from '../src/Route.js';
-import run from './run.js';
+import Route from './src/Route.js';
 
-run('new Route w/no arguments', {Route}, () => { 
+run('new Route w/no arguments', () => { 
   assert.succeeds(() => new Route(), 'should create a new Route without arguments');
 });
 
-run('new Route with value', {Route}, () => {
+run('new Route with value', () => {
   assert.succeeds(() => new Route(123), 'should create a new Route with a value of 123');
 });
 
-run('Route.find finds match', {Route}, () => {
+run('Route.find finds match', () => {
   const data = { Test: 123 };
   assert.equal(Route.find(data, 'Test'), 'Test', 'should find exact match');
   assert.equal(Route.find(data, 'test'), 'Test', 'should find insensitive match');
 });
 
-run('Route.find defaults to name', {Route}, () => {
+run('Route.find defaults to name', () => {
   const data = {};
   assert.equal(Route.find(data, 'Test'), 'Test', 'should return name if no match found');
 });
 
-run('new Route creates root', {Route}, () => {
+run('new Route creates root', () => {
   const route = new Route(123);
   assert.equal(route.root, route, 'should set root to itself');
   assert.equal(route.last, route, 'shoule set last to itself');
@@ -33,7 +32,7 @@ run('new Route creates root', {Route}, () => {
   assert.equal(route.result, 123, 'should have result equal to value');
 });
 
-run('Route.append adds next node', {Route}, () => {
+run('Route.append adds next node', () => {
   const route = new Route(123);
   const next = route.append('test', 456);
   assert.equal(next.name, 'test', 'next name is test');
@@ -46,7 +45,7 @@ run('Route.append adds next node', {Route}, () => {
   assert.equal([...route].length, 2, 'should iterate over both nodes');
 });
 
-run('Route.data returns -2', {Route}, () => {
+run('Route.data returns -2', () => {
   const data = 123;
   const root = new Route(data);
   assert.nothing(root.data, 'single node should have no data');
@@ -54,7 +53,7 @@ run('Route.data returns -2', {Route}, () => {
   assert.equal(next.data, data, 'next node should return root as data');
 });
 
-run('Route.index returns last.name', {Route}, () => {
+run('Route.index returns last.name', () => {
   const name = 'test';
   const data = 123;
   const root = new Route({ [name]: data });
@@ -65,14 +64,14 @@ run('Route.index returns last.name', {Route}, () => {
   assert.equal(root.data, root.value, 'data should be the parent value');
 });
 
-run('Route.value returns the node value', {Route}, () => {
+run('Route.value returns the node value', () => {
   const root = new Route(123);
   const next = root.append('test', 456);
   assert.equal(root.value, 123, 'root value should be 123');
   assert.equal(next.value, 456, 'next value should be 456');
 });
 
-run('Route.next and Route.parent and Route.root and Route.last', {Route}, () => {
+run('Route.next and Route.parent and Route.root and Route.last', () => {
   const root = new Route(123);
   const next = root.append('test', 456);
   assert.equal(root.next, next, 'root next should point to the first child');
@@ -83,7 +82,7 @@ run('Route.next and Route.parent and Route.root and Route.last', {Route}, () => 
   assert.equal(next.root, root, 'next should point to root as well');
 });
 
-run(`Route iterates from root`, {Route}, () => {
+run(`Route iterates from root`, () => {
   const root = new Route(123);
   var node = root.append('asdf', 456);
   node = node.append('qwer', 789);
@@ -95,7 +94,7 @@ run(`Route iterates from root`, {Route}, () => {
   assert.equal(nodes[1], node.parent, 'second node should be the next of the first child');
 });
 
-run(`Route.clone maps from root`, {Route}, () => {
+run(`Route.clone maps from root`, () => {
   const root = new Route(123);
   var node = root.append('asdf', 456);
   node = node.append('qwer', 789);
@@ -110,7 +109,7 @@ run(`Route.clone maps from root`, {Route}, () => {
   assert.equal([...clone].length, 3, 'clone should have the same number of nodes');
 });
 
-run(`Route.select generates valid route`, {Route}, () => {
+run(`Route.select generates valid route`, () => {
   const root = new Route({ a: { b: { c: 123 } } });
   const route = root.select(['a', 'b', 'c']);
   const nodes = [ ...route ];
@@ -125,7 +124,7 @@ run(`Route.select generates valid route`, {Route}, () => {
   assert.equal(route.root.next.next, nodes[2], 'next should point to the second child of the root');
 });
 
-run(`Route.select handles non-existent paths`, {Route}, () => {
+run(`Route.select handles non-existent paths`, () => {
   const root = new Route({});
   const route = root.select(['a', 'b', 'c']);
   const nodes = [ ...route ];
@@ -139,7 +138,7 @@ run(`Route.select handles non-existent paths`, {Route}, () => {
   assert.equal(nodes.length, 4, 'should have 3 nodes in the route');
 });
 
-run('Route.assign fails single Route', {Route}, () => {
+run('Route.assign fails single Route', () => {
   const root = new Route({ a: { b: { c: 123 } } });
   const assign = root.assign(456);
   assert.unequal(assign.root, root, 'assign should be a new instance');
@@ -148,7 +147,7 @@ run('Route.assign fails single Route', {Route}, () => {
   assert.equal([...root].length, 1, 'root should have only one node');
 });
 
-run('Route.assign to valid route', {Route}, () => {
+run('Route.assign to valid route', () => {
   const data = { a: { b: { c: 123 } } };
   const source = new Route(data).select('a.b.c'.split('.'));
   const assign = source.assign(456);
@@ -165,7 +164,7 @@ run('Route.assign to valid route', {Route}, () => {
   assert.equal([...assign][3].value, 456, 'assign.a.b.c should be new value');
 });
 
-run('Route.assign handles non-existent paths', {Route}, () => {
+run('Route.assign handles non-existent paths', () => {
   const data = {};
   const source = new Route(data).select('a.b.c'.split('.'));
   const assign = source.assign(456);
