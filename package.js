@@ -11,21 +11,31 @@ const packages = FS.readdirSync(importPath).map(f => PATH.join(importPath, f)); 
 var complete = false;
 (async () => {
   for (var pkg of packages.map(p => PATH.resolve(p))) {
+    var bundle = await rollup({ input: pkg });
+
+    // Convert cammelcase to dash-case for the file name
     const name = PATH.basename(pkg, '.js');
     const file = name.replace(/(?<!^)([A-Z])/g, '-$1').toLowerCase();
-    var bundle = await rollup({ input: pkg });
+
+    // Generate module bundle
     var module = clean((await bundle.generate({})).output[0].code);
     var moduleName = PATH.resolve(exportPath, `${file}-module.js`);
     if (FS.existsSync(moduleName)) { FS.rm(moduleName); }
     FS.writeFileSync(moduleName, module);
+
+    // Generate UMD bundle
     var pack = clean((await bundle.generate({format: 'umd', name})).output[0].code);
     var packName = PATH.resolve(exportPath, `${file}-package.js`);
     if (FS.existsSync(packName)) { FS.rm(packName); }
     FS.writeFileSync(packName, pack);
+
+    // Minify the UMD bundle
     var minified = UGLIFY.minify(pack, { keep_fnames: true });
     var minifiedName = PATH.resolve(exportPath, `${file}-package.min.js`);
     if (FS.existsSync(minifiedName)) { FS.rm(minifiedName); }
     FS.writeFileSync(minifiedName, minified.code);
+
+    // Zip for download
     execSync(`
       cd ${PATH.resolve(exportPath)}
       zip ${file}.zip ${file}-package.min.js
