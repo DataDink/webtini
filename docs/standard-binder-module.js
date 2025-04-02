@@ -223,7 +223,7 @@ class AttributeBinder extends Binder.Extension {
   handleAttribute(binder, element, route, name, value) {
     if (!name.startsWith(AttributeBinder.PREFIX)) { return false; }
     const attr = name.substring(AttributeBinder.PREFIX.length);
-    const content = route.select(value.split('.')).value?.toString();
+    const content = route.select(value.split('.')).result?.toString();
     if (content == null && !element.hasAttribute(attr)) { return true; }
     const current = element.getAttribute(attr);
     if (content === current) { return true; }

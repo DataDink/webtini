@@ -114,3 +114,28 @@ run('Binder triggers attribute extension', () => {
   binder2.bind(element, {value: 123});
   assert.equal(element.test, 123, 'Expected extension2 to not handle test attribute');
 });
+
+run('Binder triggers element extension', () => {
+  const parent = document.createElement('div');
+  parent.setAttribute(Binder.PREFIX + 'test', 'value');
+  const child = parent.appendChild(document.createElement('div'));
+  child.setAttribute(Binder.PREFIX + 'test', 'value');
+  const binder = new Binder(new class extends Binder.Extension {
+    handleElement(binder, view, data) {
+      assert.truthy(binder instanceof Binder, 'Expected binder to be a binder');
+      assert.equal(view, parent, 'Expected view to be the parent');
+      assert.truthy(data instanceof Route, 'Expected data to be a route');
+      return true;
+    }
+  }());
+  assert.nothing(parent.test, 'Expected extension to block parent');
+  assert.nothing(child.test, 'Expected extension to block child');
+  const binder2 = new Binder(new class extends Binder.Extension {
+    handleElement(binder, view, data) {
+      return false;
+    }
+  }());
+  binder2.bind(parent, {value: 123});
+  assert.equal(parent.test, 123, 'Expected extension2 to not block parent');
+  assert.equal(child.test, 123, 'Expected extension2 to not block child');
+});
