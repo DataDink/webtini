@@ -2,9 +2,12 @@
 <html lang="en">
   <head><title>WEBTINI TEST IN PROGRESS</title></head>
   <body>
+    <h1>Running webtini tests...</h1>
     <script type="module">
       const suiteName = '{{testSuite}}';
       const tests = [];
+      const notes = [];
+      console.note = message => notes.push(message?.toString());
       window.run = function(description, test) {
         var result = {
           description: description,
@@ -36,6 +39,7 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             suite: suiteName,
+            notes: notes,
             tests: tests
           })
         }).then(response => {

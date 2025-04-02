@@ -45,7 +45,7 @@ run('Route.append adds next node', () => {
   assert.equal([...route].length, 2, 'should iterate over both nodes');
 });
 
-run('Route.data returns -2', () => {
+run('Route.data returns second-to-last value', () => {
   const data = 123;
   const root = new Route(data);
   assert.nothing(root.data, 'single node should have no data');

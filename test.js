@@ -1,4 +1,5 @@
 // GOOD GRIEF! Someone has to have a better solution for testing browser-based modules without transpiling
+// TODO: Find an alternative method for <script type="module"> testing
 
 import FS from 'fs';
 import PATH from 'path';
@@ -53,7 +54,8 @@ const server = HTTP.createServer((req, res) => {
       try {
         const result = JSON.parse(response);
         const suite = results[result.suite];
-        suite.tests = result.tests || [];
+        suite.notes = result.notes ?? [];
+        suite.tests = result.tests ?? [];
         suite.fails = suite.tests.filter(test => test.asserts.length);
         suite.passes = suite.tests.filter(test => !test.asserts.length);
       } catch (e) { console.fail("Error parsing POST data"); }
@@ -65,6 +67,9 @@ const server = HTTP.createServer((req, res) => {
         for (const suite of Object.values(results)) {
           if (suite.fails.length) { console.fail( `✘ ${suite.suite}:`); }
           else { console.pass(`✔ ${suite.suite}:`); }
+          for (const note of suite.notes) {
+            console.warn(`  Note: ${note}`);
+          }
           for (const test of suite.fails) {
             console.fail(`  ✘ ${test.description}:`);
             for (const failure of test.asserts) {
