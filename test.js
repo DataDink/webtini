@@ -23,7 +23,7 @@ console.warn = message => console.error(`\x1b[33m${message}\x1b[0m`);
 const results = {};
 
 // Okay, so we serve templated files and launch a browser to run the tests and then submit results
-const server = HTTP.createServer((req, res) => {
+HTTP.createServer((req, res) => {
   if (req.method === 'GET' && req.url.length > 1) {
     const path = PATH.resolve(req.url.replace( /^\//, ''));
     if (!FS.existsSync(path)) { 
@@ -34,6 +34,32 @@ const server = HTTP.createServer((req, res) => {
     }
     res.writeHead(200, { 'Content-Type': 'application/javascript; charset=utf-8' });
     res.end(FS.readFileSync(path, 'utf8'));
+    return;
+  }
+  if (req.method === 'GET' && !testFiles.length) {
+    const tests = Object.values(results).flatMap(s => s.tests).length;
+    const passes = Object.values(results).flatMap(s => s.passes).length;
+    const failed = tests - passes;
+    var html = `<html><head><title>webtini test results</title></head><body>`
+    html += `<h1>webtini test results: <small>${new Date().toUTCString()}</small></h1>`;
+    html += `<p>Tests: ${tests}, Passed: ${passes}, Failed: ${failed}</p>`;
+    for (const suite in results) {
+      html += `<h2>${suite}</h2>`;
+      html += `<ul>`;
+      for (const test of results[suite].tests) {
+        const color = test.asserts.length ? 'red' : 'green';
+        html += `<li style="color:${color}">${test.description}</li>`;
+      }
+      html += `</ul>`;
+    }
+    html += `</body></html>`;
+    FS.writeFileSync(ouput, html, 'utf8');
+    res.writeHead(200, {
+      'Content-Type': 'text/html; charset=utf-8',
+      'Cache-Control': 'no-cache, no-store, must-revalidate' // Prevent caching
+    });
+    res.end(html);
+    setTimeout(() => process.exit(failed ? 1 : 0), 1000);
     return;
   }
   if (req.method === 'GET') {
@@ -65,27 +91,22 @@ const server = HTTP.createServer((req, res) => {
       if (testFiles.length) { 
         launch(); 
       } else {
-        let html = `<html><head><title>WEBTINI TEST RESULTS</title></head><body><h1>WEBTINI TEST RESULTS: <small>${new Date().toUTCString()}</small></h1>`;
         console.warn("Test Results:");
         for (const suite of Object.values(results)) {
-          html += `<h2>${suite.suite}</h2><ul>`;
           if (suite.fails.length) { console.fail( `✘ ${suite.suite}:`); }
           else { console.pass(`✔ ${suite.suite}:`); }
           for (const note of suite.notes) {
             console.warn(`  Note: ${note}`);
           }
           for (const test of suite.fails) {
-            html += `<li style="color:red;">${test.description}<ul>`;
             console.fail(`  ✘ ${test.description}:`);
             for (const failure of test.asserts) {
               console.log(`    ${failure}`);
             }
           }
           for (const test of suite.passes) {
-            html += `<li style="color:green;">${test.description}</li>`;
             console.pass(`  ✔ ${test.description}:`);
           }
-          html += '</ul>';
         }
         const tests = Object.values(results).flatMap(s => s.tests).length;
         const passes = Object.values(results).flatMap(s => s.passes).length;
@@ -93,10 +114,7 @@ const server = HTTP.createServer((req, res) => {
         const resultText = `Tests: ${tests}, Passed: ${passes}, Failed: ${failed}`;
         if (failed) { console.fail(resultText); }
         else { console.warn(resultText); }
-        html += `<h2>${resultText}</h2>`;
-        html += '</body></html>';
-        FS.writeFileSync(ouput, html);
-        process.exit(failed ? 1 : 0); 
+        launch();
       }
     });
     return;
