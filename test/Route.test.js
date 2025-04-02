@@ -74,3 +74,59 @@ run('Route.next and Route.parent and Route.root and Route.last', {Route}, () => 
   assert.equal(root.root, root, 'root should point to itself as root');
   assert.equal(next.root, root, 'next should point to root as well');
 });
+
+run(`Route iterates from root`, {Route}, () => {
+  const root = new Route(123);
+  var node = root.append('asdf', 456);
+  node = node.append('qwer', 789);
+  var nodes = [...node];
+  assert.equal(nodes.length, 3, 'should be 3 nodes');
+  assert.equal(nodes[0], root, 'first node should be root');
+  assert.equal(nodes[2], node, 'last node should be the last appended node');
+  assert.equal(nodes[1], root.next, 'second node should be the first child of root');
+  assert.equal(nodes[1], node.parent, 'second node should be the next of the first child');
+});
+
+run(`Route.clone maps from root`, {Route}, () => {
+  const root = new Route(123);
+  var node = root.append('asdf', 456);
+  node = node.append('qwer', 789);
+  var clone = root.clone();
+  assert.equal(clone.data, root.data, 'clone root data should match original');
+  assert.equal(clone.index, root.index, 'clone root index should match original');
+  assert.equal(clone.result, root.result, 'clone root value should match original');
+  assert.unequal(clone.root, root, 'clone root should not be the same instance as original');
+  assert.unequal(clone.last, root.last, 'clone last should not be the same instance as original last');
+  assert.unequal(clone, node, 'clone should not be the same instance as the original node');
+  assert.unequal(clone.parent, node.parent, 'clone parent should not be the same instance as original parent');
+  assert.equal([...clone].length, 3, 'clone should have the same number of nodes');
+});
+
+run(`Route.select generates valid route`, {Route}, () => {
+  const root = new Route({ a: { b: { c: 123 } } });
+  const route = root.select(['a', 'b', 'c']);
+  const nodes = [ ...route ];
+  assert.equal(route.index, 'c', 'should find the last index correctly');
+  assert.equal(route.result, 123, 'should find the correct value at the end of the route');
+  assert.equal(route.data, route.parent.value, 'should have the parent value as data');
+  assert.equal(route.path.join('.'), 'a.b.c', 'should join the path correctly');
+  assert.unequal(route.root, root, 'root should be new instance');
+  assert.nothing(route.root.name, 'root should have no name');
+  assert.equal(route.root.value, root.value, 'root value should match original root value');
+  assert.equal(route.root.next, nodes[1], 'next should point to the first child of the root');
+  assert.equal(route.root.next.next, nodes[2], 'next should point to the second child of the root');
+});
+
+run(`Route.select handles non-existent paths`, {Route}, () => {
+  const root = new Route({});
+  const route = root.select(['a', 'b', 'c']);
+  const nodes = [ ...route ];
+  assert.equal(route.index, 'c', 'should still set index to the last name');
+  assert.nothing(route.result, 'non-existent path should have null value');
+  assert.equal(route.parent.name, 'b', 'parent name should be parent index');
+  assert.nothing(route.parent.value, 'non-existent parent should have null value');
+  assert.equal(route.parent.parent.name, 'a', 'grandparent should have grandparent name');
+  assert.nothing(route.parent.parent.value, 'grandparent should have null value');
+  assert.equal(route.parent.parent.parent, route.root, 'great-grandparent should be root');
+  assert.equal(nodes.length, 4, 'should have 3 nodes in the route');
+});

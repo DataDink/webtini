@@ -53,7 +53,7 @@ export default class Route {
    * @description The key path of the route.
    * @type {string[]}
    */
-  get path() { return [...this].map(node => node.name); }
+  get path() { return [...this].slice(1).map(node => node.name); }
   /**
    * @property data
    * @memberof module:Route.Route
