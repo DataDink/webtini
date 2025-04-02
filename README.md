@@ -57,7 +57,7 @@
       </template>
     </div>
     <script type="module">
-      // An application is a viewmodel that the web view can be bound to using a `Binder`.
+      // The Application here acts as a viewmodel that the DOM view can be bound to using a `Binder`.
       // It exposes data and functionality for the view to bind to.
       class Application {
         // Binders are the engines for webtini applications.

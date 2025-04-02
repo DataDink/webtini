@@ -6,6 +6,7 @@ import PATH from 'path';
 import HTTP from 'http';
 import {exec} from 'child_process';
 
+const ouput = './test/test-results.html';
 const testPath = './test';
 const template = FS.readFileSync(PATH.resolve(testPath, 'test.html'), 'utf8');
 const testFiles = FS.readdirSync(testPath)
@@ -61,24 +62,30 @@ const server = HTTP.createServer((req, res) => {
       } catch (e) { console.fail("Error parsing POST data"); }
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ status: 'ok' }));
-      if (testFiles.length) { launch(); }
-      else {
+      if (testFiles.length) { 
+        launch(); 
+      } else {
+        let html = `<html><head><title>WEBTINI TEST RESULTS</title></head><body><h1>WEBTINI TEST RESULTS: <small>${new Date().toUTCString()}</small></h1>`;
         console.warn("Test Results:");
         for (const suite of Object.values(results)) {
+          html += `<h2>${suite.suite}</h2><ul>`;
           if (suite.fails.length) { console.fail( `✘ ${suite.suite}:`); }
           else { console.pass(`✔ ${suite.suite}:`); }
           for (const note of suite.notes) {
             console.warn(`  Note: ${note}`);
           }
           for (const test of suite.fails) {
+            html += `<li style="color:red;">${test.description}<ul>`;
             console.fail(`  ✘ ${test.description}:`);
             for (const failure of test.asserts) {
               console.log(`    ${failure}`);
             }
           }
           for (const test of suite.passes) {
+            html += `<li style="color:green;">${test.description}</li>`;
             console.pass(`  ✔ ${test.description}:`);
           }
+          html += '</ul>';
         }
         const tests = Object.values(results).flatMap(s => s.tests).length;
         const passes = Object.values(results).flatMap(s => s.passes).length;
@@ -86,6 +93,9 @@ const server = HTTP.createServer((req, res) => {
         const resultText = `Tests: ${tests}, Passed: ${passes}, Failed: ${failed}`;
         if (failed) { console.fail(resultText); }
         else { console.warn(resultText); }
+        html += `<h2>${resultText}</h2>`;
+        html += '</body></html>';
+        FS.writeFileSync(ouput, html);
         process.exit(failed ? 1 : 0); 
       }
     });
