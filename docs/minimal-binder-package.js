@@ -186,6 +186,7 @@
         new EventBinder(),
       );
     }
+    static Extension = Binder.Extension;
   }
   return MinimalBinder;
 }));

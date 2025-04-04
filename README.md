@@ -120,14 +120,40 @@ Includes all standard modules
 
 [download](https://datadink.github.io/webtini/standard-binder.zip)
 
+**Common JS**
+
 ```html
 <!-- to pull directly from github (not for production) -->
 <script src="https://datadink.github.io/webtini/standard-binder-package.min.js"></script>
 ```
 
+**JS Module**
+
 ```javascript
-// less optimal & also not for production
-import StandardBinder from 'https://datadink.github.io/webtini/StandardBinder.js';
+// to import directly from github (also not for production)
+import StandardBinder from 'https://datadink.github.io/webtini/standard-binder-module.js';
+```
+
+**Import Map**
+
+```html
+<!-- to define an import map from github (not for production) -->
+<html>
+  <head>
+    <script type="importmap">
+      {
+        "imports": {
+          "StandardBinder": "https://datadink.github.io/webtini/standard-binder-module.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <script type="module">
+      import StandardBinder from "StandardBinder";
+    </script>
+  </body>
+</html>
 ```
 
 **Includes:**
@@ -145,14 +171,40 @@ Provides basic model binding, content generation & interactivity
 
 [download](https://datadink.github.io/webtini/minimal-binder.zip)
 
+**Common JS**
+
 ```html
 <!-- to pull directly from github (not for production) -->
 <script src="https://datadink.github.io/webtini/minimal-binder-package.min.js"></script>
 ```
 
+**JS Module**
+
 ```javascript
-// less optimal & also not for production
-import MinimalBinder from 'https://datadink.github.io/webtini/MinimalBinder.js';
+// to import directly from github (also not for production)
+import MinimalBinder from 'https://datadink.github.io/webtini/minimal-binder-module.js';
+```
+
+**Import Map**
+
+```html
+<!-- to define an import map from github (not for production) -->
+<html>
+  <head>
+    <script type="importmap">
+      {
+        "imports": {
+          "MinimalBinder": "https://datadink.github.io/webtini/minimal-binder-module.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <script type="module">
+      import MinimalBinder from "MinimalBinder";
+    </script>
+  </body>
+</html>
 ```
 
 **Includes:**

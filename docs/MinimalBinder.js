@@ -19,4 +19,5 @@ class MinimalBinder extends Binder {
       new EventBinder(),
     );
   }
+  static Extension = Binder.Extension;
 }

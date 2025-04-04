@@ -251,6 +251,7 @@
         new AttributeBinder()
       );
     }
+    static Extension = Binder.Extension;
   }
   return StandardBinder;
 }));

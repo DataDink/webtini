@@ -247,5 +247,6 @@ class StandardBinder extends Binder {
       new AttributeBinder()
     );
   }
+  static Extension = Binder.Extension;
 }
 export { StandardBinder as default };
