@@ -99,6 +99,12 @@ run('Binder binds descendants', assert => {
   assert.equal(child.test, 123, 'Expected child.test to be 123');
 });
 
+run('Binder binds Nodes', assert => {
+  const node = document.createDocumentFragment();
+  const binder = new Binder();
+  assert.succeeds(() => binder.bind(node, {}), 'Expected bind() to not throw with Node instance');
+});
+
 run('Binder binds with dummy extension', assert => {
   const binder = new Binder(new Binder.Extension());
   const parent = document.createElement('div');
