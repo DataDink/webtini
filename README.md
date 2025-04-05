@@ -229,7 +229,7 @@ Enables `bind-attribute-name` attributes to bind values to other attributes on a
 Enables `bind-class-name` attributes to toggle classes on an element from a boolean(ish) value
 
 ```html
-<div bind-class-bordered="data.context.selected">...</div>
+<div bind-class-active="data.context.selected">...</div>
 ```
 
 ### EventBinder
