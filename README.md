@@ -1,6 +1,6 @@
 # webtini
 
-> *minimalistic view modeling framework*
+> *minimalistic view modeling for the web*
 
 * [download latest](https://datadink.github.io/webtini/standard-binder.zip)
 * [documentation](https://datadink.github.io/webtini)
