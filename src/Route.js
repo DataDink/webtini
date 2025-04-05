@@ -79,7 +79,7 @@ export default class Route {
    * @constructor Route
    * @memberof module:Route
    * @description A class for selecting and assigning values in a data model.
-   * @param {*} root 
+   * @param {*} root The root Route or data model this route is based on. 
    * @example
    * ```javascript
    * var model = { a: { b: { c: 'value' } } };
@@ -102,6 +102,8 @@ export default class Route {
    * @function append
    * @memberof module:Route.Route
    * @description Adds a node to the end of this {@link Route}.
+   * @param {string} name The name of the new node.
+   * @param {*} value The value of the new node.
    * @returns {Route}
    */
   append(name, value) {
@@ -130,6 +132,8 @@ export default class Route {
    * @function find
    * @memberof module:Route.Route
    * @description Performs a case-insensitive search for a matching key in the data object or defaults to the name.
+   * @param {*} data The data object to search in.
+   * @param {string} name The name of the key to find.
    * @returns {string}
    */
   static find(data, name) {
@@ -141,14 +145,17 @@ export default class Route {
   /**
    * @function select
    * @memberof module:Route.Route
-   * @description Extends this {@link Route} using the path and returns a new {@link Route} instance with the result.
+   * @description Clones the {@link Route} appended with the data selection.
+   * @param {string[]} path An array of member names defining the data selection path.
    * @returns {Route}
    */
   select(path) { return Route.select(this, path); }
   /**
    * @function select
    * @memberof module:Route.Route
-   * @description Creates or extends an existing {@link Route} using the path and returns a new {@link Route} instance with the result.
+   * @description Clones the {@link Route} appended with the data selection.
+   * @param {*} source The root Route or data model to select from.
+   * @param {string[]} path An array of member names defining the data selection path.
    * @returns {Route}
    */
   static select(source, path) {
@@ -167,6 +174,7 @@ export default class Route {
    * @function assign
    * @memberof module:Route.Route
    * @description Creates an updated {@link Route}, creating {@link object}s as necessary, and updating the {@link Route}s result to the value.
+   * @param {*} value The value to assign to the route's result.
    * @returns {Route}
    */
   assign(value) { return Route.assign(this, value); }
@@ -174,6 +182,7 @@ export default class Route {
    * @function assign
    * @memberof module:Route.Route
    * @description Creates an updated {@link Route}, creating {@link object}s as necessary, and updating the {@link Route}s result to the value.
+   * @param {*} value The value to assign to the route's result.
    * @returns {Route}
    */
   static assign(route, value) {

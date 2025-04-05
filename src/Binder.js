@@ -35,7 +35,7 @@ export default class Binder {
    * @class Binder
    * @memberof module:Binder
    * @description The core of webtini functionality. Renders a view using a data model.
-   * @param  {...Binder.Extension} extensions 
+   * @param  {...Binder.Extension} extensions Loads the Binder instance with Binder.Extensions.
    * @example
    * ```html
    * <html>
@@ -136,22 +136,22 @@ export default class Binder {
      * @function handleElement
      * @memberof module:Binder.Binder.Extension
      * @description A method for handling descendant elements.
-     * @param {Binder} binder 
-     * @param {Element} element 
-     * @param {Route} route 
-     * @returns {boolean}
+     * @param {Binder} binder The Binder instance that is currently processing the view.
+     * @param {Element} element The view element being processed.
+     * @param {Route} route The Route or data model being bound to the element.
+     * @returns {boolean} If true, prevents further processing of the element by the Binder.
      */
     handleElement(binder, element, route) { return false; }
     /**
      * @function handleAttribute
      * @memberof module:Binder.Binder.Extension
      * @description A method for handling an attribute on an element
-     * @param {Binder} binder 
-     * @param {Element} element 
-     * @param {Route} route 
-     * @param {string} name 
-     * @param {string} value 
-     * @returns {boolean}
+     * @param {Binder} binder The Binder instance that is currently processing the view.
+     * @param {Element} element The view element being processed.
+     * @param {Route} route The Route or data model being bound to the element.
+     * @param {string} name The name of the attribute being processed, minus the Binding.PREFIX.
+     * @param {string} value The value of the attribute being processed.
+     * @returns {boolean} If true, prevents further processing of the attribute by the Binder.
      */
     handleAttribute(binder, element, route, name, value) { return false; }
   }

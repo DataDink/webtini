@@ -42,8 +42,8 @@ class TextBinder extends Binder.Extension {
    * @function parse
    * @memberof module:TextBinder.TextBinder
    * @description Parses a string into text/selector pairs.
-   * @param {string} text 
-   * @returns {Array}
+   * @param {string} text The text to parse
+   * @returns {Array} An array of parsed segments: {text, selector}
    */
   static parse(text) {
     var matches = [...(text??'').matchAll(/\{\{|\}\}|\{([^\}]+)\}/g)];
