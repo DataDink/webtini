@@ -2,29 +2,29 @@ import TextBinder from './src/TextBinder.js';
 import Binder from './src/Binder.js';
 import Route from './src/Route.js';
 
-run('new TextBinder()', () => {
+run('new TextBinder()', assert => {
   assert.succeeds(() => { new TextBinder(); }, "new TextBinder w/ no arguments");
 });
 
-run('TextBinder parses null', () => {
+run('TextBinder parses null', assert => {
   const results = TextBinder.parse(null);
   assert.truthy(Array.isArray(results), 'Expected parse(null) to return an array');
   assert.equal(results.length, 0, 'Expected parse(null) to return an empty array');
 });
 
-run('TextBinder parses empty string', () => {
+run('TextBinder parses empty string', assert => {
   const results = TextBinder.parse('');
   assert.truthy(Array.isArray(results), 'Expected parse("") to return an array');
   assert.equal(results.length, 0, 'Expected parse("") to return an empty array');
 });
 
-run('TextBinder parses simple text', () => {
+run('TextBinder parses simple text', assert => {
   const results = TextBinder.parse('Hello World');
   assert.truthy(Array.isArray(results), 'Expected parse("Hello World") to return an array');
   assert.equal(results.length, 0, 'Expected parse("Hello World") to return an array of length 0');
 });
 
-run('TextBinder parses single binding at end', () => {
+run('TextBinder parses single binding at end', assert => {
   const results = TextBinder.parse('Hello {name}');
   assert.truthy(Array.isArray(results), 'Expected parse("Hello {name}") to return an array');
   assert.equal(results.length, 2, 'Expected parse("Hello {name}") to return an array of length 2');
@@ -34,7 +34,7 @@ run('TextBinder parses single binding at end', () => {
   assert.equal(results[1].text, '', 'Expected second part text to be ""');
 });
 
-run('TextBinder parses single binding at front', () => {
+run('TextBinder parses single binding at front', assert => {
   const results = TextBinder.parse('{name} Hello');
   assert.truthy(Array.isArray(results), 'Expected parse("{name} Hello") to return an array');
   assert.equal(results.length, 2, 'Expected parse("{name} Hello") to return an array of length 2');
@@ -44,7 +44,7 @@ run('TextBinder parses single binding at front', () => {
   assert.equal(results[1].text, ' Hello', 'Expected second part text to be " Hello"');
 });
 
-run('TextBinder parses single binding at middle', () => {
+run('TextBinder parses single binding at middle', assert => {
   const results = TextBinder.parse('Hello {name} Hello');
   assert.truthy(Array.isArray(results), 'Expected parse("Hello {name} Hello") to return an array');
   assert.equal(results.length, 2, 'Expected parse("Hello {name} Hello") to return an array of length 2');
@@ -54,7 +54,7 @@ run('TextBinder parses single binding at middle', () => {
   assert.equal(results[1].text, ' Hello', 'Expected second part text to be " Hello"');
 });
 
-run('TextBinder parses multiple bindings', () => {
+run('TextBinder parses multiple bindings', assert => {
   const results = TextBinder.parse('Hello {name}, welcome to {place}!');
   assert.truthy(Array.isArray(results), 'Expected parse("Hello {name}, welcome to {place}!") to return an array');
   assert.equal(results.length, 3, 'Expected parse("Hello {name}, welcome to {place}!") to return an array of length 3');
@@ -66,7 +66,7 @@ run('TextBinder parses multiple bindings', () => {
   assert.equal(results[2].text, '!', 'Expected third part text to be "!"');
 });
 
-run('TextBinder parses escaped braces', () => {
+run('TextBinder parses escaped braces', assert => {
   const results = TextBinder.parse('Hello {{name}} and {place}!');
   assert.truthy(Array.isArray(results), 'Expected parse("Hello {{name}} and {place}!") to return an array');
   assert.equal(results.length, 4, 'Expected parse("Hello {{name}} and {place}!") to return an array of length 4');
@@ -80,14 +80,14 @@ run('TextBinder parses escaped braces', () => {
   assert.equal(results[3].text, '!', 'Expected fourth part text to be "!"');
 });
 
-run('TextBinder.handleElement false for non-Text node', () => {
+run('TextBinder.handleElement false for non-Text node', assert => {
   const binder = new TextBinder();
   const element = document.createElement('div');
   const result = binder.handleElement(new Binder(), element, new Route());
   assert.falsey(result, 'Expected handleElement to return false for non-Text node');
 });
 
-run('TextBinder.handleElement true for Text node without bindings', () => {
+run('TextBinder.handleElement true for Text node without bindings', assert => {
   const binder = new TextBinder();
   const element = document.createTextNode('No bindings here');
   const result = binder.handleElement(new Binder(), element, new Route());
@@ -95,7 +95,7 @@ run('TextBinder.handleElement true for Text node without bindings', () => {
   assert.equal(element.textContent, 'No bindings here', 'Expected text content to remain unchanged');
 });
 
-run('TextBinder.handleElement updates Text node with bindings', () => {
+run('TextBinder.handleElement updates Text node with bindings', assert => {
   const binder = new TextBinder();
   const model = { name: 'Alice', place: 'Wonderland' };
   const element = document.createTextNode('Hello {name}, welcome to {place}!');

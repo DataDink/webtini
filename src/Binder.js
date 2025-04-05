@@ -74,8 +74,8 @@ export default class Binder {
    * @function bind
    * @memberof module:Binder.Binder
    * @description Renders the view using the data.
-   * @param {Element} view 
-   * @param {*} data 
+   * @param {Element} view The root element to bind.
+   * @param {*} data The Route or data model to bind from.
    * @returns {Element}
    */
   bind(view, data) {
@@ -101,6 +101,18 @@ export default class Binder {
     }
     this.#active--;
     return view;
+  }
+  #defer = setTimeout(() => {});
+  /**
+   * @function defer
+   * @memberof module:Binder.Binder
+   * @description Queues binding to occur after the current call stack is clear. Only the latest call to this function will execute.
+   * @param {Element} view The root element to bind.
+   * @param {*} data The Route or data model to bind from.
+   */
+  defer(view, data) {
+    clearTimeout(this.#defer);
+    this.#defer = setTimeout(() => this.bind(view, data));
   }
   static Extension = 
   /**

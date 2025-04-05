@@ -2,15 +2,15 @@ import ClassBinder from './src/ClassBinder.js';
 import Binder from './src/Binder.js';
 import Route from './src/Route.js';
 
-run('ClassBinder.PREFIX is unchanged', () => {
+run('ClassBinder.PREFIX is unchanged', assert => {
   assert.equal(ClassBinder.PREFIX, 'class-', 'Changing ClassBinder.PREFIX may break existing code.');
 });
 
-run('new ClassBinder()', () => {
+run('new ClassBinder()', assert => {
   assert.succeeds(() => { new ClassBinder(); }, 'new ClassBinder w/ no arguments');
 });
 
-run('ClassBinder.handleAttribute false without prefix', () => {
+run('ClassBinder.handleAttribute false without prefix', assert => {
   const extension = new ClassBinder();
   assert.falsey(extension.handleAttribute(
     new Binder(),
@@ -21,7 +21,7 @@ run('ClassBinder.handleAttribute false without prefix', () => {
   ), 'Expected handleAttribute to return false without prefix');
 });
 
-run('ClassBinder.handleAttribute true with prefix', () => {
+run('ClassBinder.handleAttribute true with prefix', assert => {
   const extension = new ClassBinder();
   assert.truthy(extension.handleAttribute(
     new Binder(),
@@ -32,7 +32,7 @@ run('ClassBinder.handleAttribute true with prefix', () => {
   ), 'Expected handleAttribute to return true with prefix');
 });
 
-run('ClassBinder.handleAttribute removes class with no data', () => {
+run('ClassBinder.handleAttribute removes class with no data', assert => {
   const extension = new ClassBinder();
   const element = document.createElement('div');
   const attribute = ClassBinder.PREFIX + 'test';
@@ -47,7 +47,7 @@ run('ClassBinder.handleAttribute removes class with no data', () => {
   assert.falsey(element.classList.contains('test'), 'Expected class to be removed');
 });
 
-run('ClassBinder.handleAttribute adds class with data', () => {
+run('ClassBinder.handleAttribute adds class with data', assert => {
   const extension = new ClassBinder();
   const element = document.createElement('div');
   const attribute = ClassBinder.PREFIX + 'test';

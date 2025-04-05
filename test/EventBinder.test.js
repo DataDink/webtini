@@ -2,15 +2,15 @@ import EventBinder from './src/EventBinder.js';
 import Binder from './src/Binder.js';
 import Route from './src/Route.js';
 
-run('EventBinder.PREFIX is unchanged', () => {
+run('EventBinder.PREFIX is unchanged', assert => {
   assert.equal(EventBinder.PREFIX, 'event-', 'Changing EventBinder.PREFIX may break existing code.');
 });
 
-run('new EventBinder()', () => {
+run('new EventBinder()', assert => {
   assert.succeeds(() => { new EventBinder(); }, 'new EventBinder w/ no arguments');
 });
 
-run('EventBinder.handleAttribute false without prefix', () => {
+run('EventBinder.handleAttribute false without prefix', assert => {
   const extension = new EventBinder();
   assert.falsey(extension.handleAttribute(
     new Binder(),
@@ -21,7 +21,7 @@ run('EventBinder.handleAttribute false without prefix', () => {
   ), 'Expected handleAttribute to return false without prefix');
 });
 
-run('EventBinder.handleAttribute true with prefix', () => {
+run('EventBinder.handleAttribute true with prefix', assert => {
   const extension = new EventBinder();
   assert.truthy(extension.handleAttribute(
     new Binder(),
@@ -32,7 +32,7 @@ run('EventBinder.handleAttribute true with prefix', () => {
   ), 'Expected handleAttribute to return true with prefix');
 });
 
-run('EventBinder.handleAttribute assigns function to event', () => {
+run('EventBinder.handleAttribute assigns function to event', assert => {
   const extension = new EventBinder();
   const element = document.createElement('div');
   const attribute = EventBinder.PREFIX + 'test';
@@ -49,7 +49,7 @@ run('EventBinder.handleAttribute assigns function to event', () => {
   assert.truthy(triggered, 'Expected the event handler to be called');
 });
 
-run('EventBinder.handleAttribute removes event listener on non-function', () => {
+run('EventBinder.handleAttribute removes event listener on non-function', assert => {
   const extension = new EventBinder();
   const element = document.createElement('div');
   const attribute = EventBinder.PREFIX + 'test';

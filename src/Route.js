@@ -180,11 +180,11 @@ export default class Route {
     if (!(route instanceof Route)) { throw new Error('Route.assign: route must be an instance of a Route.'); }
     var update = new Route(route.#root.#value);
     if (route.root.next == null || update.value == null) { return update; }
-    for (var node = route.root.next; node; node = node.next) {
+    for (var node = route.root.next; node.next; node = node.next) {
       var name = Route.find(update.value, node.name);
       update = update.append(name, update.value[name] ??= {});
     }
-    update.#value = update.data[update.name] = value;
+    update.append(route.last.name, update.result ? update.result[route.last.name] = value : value);
     return update;
   }
 }

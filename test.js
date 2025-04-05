@@ -6,13 +6,14 @@ import PATH from 'path';
 import HTTP from 'http';
 import {exec} from 'child_process';
 
-const ouput = './test/test-results.html';
 const testPath = './test';
+const outputPath = './test/test-results.html';
+const testPort = 8765;
+
 const template = FS.readFileSync(PATH.resolve(testPath, 'test.html'), 'utf8');
 const testFiles = FS.readdirSync(testPath)
   .filter(file => file.endsWith('.test.js'))
   .map(file => PATH.resolve(testPath, file));
-const testPort = 8765;
 const testCommand = (process.platform === 'darwin' ? 'open': process.platform === 'win32' ? 'start' : 'xdg-open');
 const launch = () => setTimeout(() => exec(`${testCommand} http://localhost:${testPort}/`), 250);
 
@@ -53,10 +54,10 @@ HTTP.createServer((req, res) => {
       html += `</ul>`;
     }
     html += `</body></html>`;
-    FS.writeFileSync(ouput, html, 'utf8');
+    FS.writeFileSync(outputPath, html, 'utf8');
     res.writeHead(200, {
       'Content-Type': 'text/html; charset=utf-8',
-      'Cache-Control': 'no-cache, no-store, must-revalidate' // Prevent caching
+      'Cache-Control': 'no-cache, no-store, must-revalidate'
     });
     res.end(html);
     setTimeout(() => process.exit(failed ? 1 : 0), 1000);

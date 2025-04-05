@@ -2,18 +2,18 @@ import TemplateBinder from './src/TemplateBinder.js';
 import Route from './src/Route.js';
 import Binder from './src/Binder.js';
 
-run('new TemplateBinder()', () => {
+run('new TemplateBinder()', assert => {
   assert.succeeds(() => { new TemplateBinder(); }, "new TemplateBinder w/ no arguments");
 });
 
-run('TemplateBinder.handleElement false with non-template', () => {
+run('TemplateBinder.handleElement false with non-template', assert => {
   const binder = new TemplateBinder();
   const element = document.createElement('div'); // Non-template element
   const result = binder.handleElement(new Binder(), element, new Route());
   assert.falsey(result, "Expected handleElement to return false for non-template elements");
 });
 
-run('TemplateBinder.handleElement true with template', () => {
+run('TemplateBinder.handleElement true with template', assert => {
   const extension = new TemplateBinder();
   const binder = new Binder(extension);
   const container = document.createElement('div');
@@ -23,7 +23,7 @@ run('TemplateBinder.handleElement true with template', () => {
   assert.truthy(result, "Expected handleElement to return true for template elements");
 });
 
-run('TemplateBinder.handleElement adds no instances for null', () => {
+run('TemplateBinder.handleElement adds no instances for null', assert => {
   const extension = new TemplateBinder();
   const binder = new Binder(extension);
   const container = document.createElement('div');
@@ -33,7 +33,7 @@ run('TemplateBinder.handleElement adds no instances for null', () => {
   assert.equal([...container.childNodes].length, 1, "Expected no new instances to be added for null route");
 });
 
-run('TemplateBinder.handleElement single instance for non-array', () => {
+run('TemplateBinder.handleElement single instance for non-array', assert => {
   const extension = new TemplateBinder();
   const binder = new Binder(extension);
   const container = document.createElement('div');
@@ -47,7 +47,7 @@ run('TemplateBinder.handleElement single instance for non-array', () => {
   assert.equal(instance.test, 123, "Expected the new instance to have the correct bound value");
 });
 
-run('TemplateBinder.handleElement two instance for two item array', () => {
+run('TemplateBinder.handleElement two instance for two item array', assert => {
   const extension = new TemplateBinder();
   const binder = new Binder(extension);
   const container = document.createElement('div');

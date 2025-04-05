@@ -2,15 +2,15 @@ import AttributeBinder from './src/AttributeBinder.js';
 import Binder from './src/Binder.js';
 import Route from './src/Route.js';
 
-run('AttributeBinder.PREFIX unchanged', () => {
+run('AttributeBinder.PREFIX unchanged', assert => {
   assert.equal(AttributeBinder.PREFIX, 'attribute-', 'changing AttributeBinder.PREFIX may break existing code');
 });
 
-run('new AttributeBinder()', () => {
+run('new AttributeBinder()', assert => {
   assert.succeeds(() => { new AttributeBinder(); }, "new AttributeBinder w/ no arguments");
 });
 
-run('AttributeBinder.handleAttribute false without prefix', () => {
+run('AttributeBinder.handleAttribute false without prefix', assert => {
   const extension = new AttributeBinder();
   assert.falsey(extension.handleAttribute(
     new Binder(),
@@ -21,7 +21,7 @@ run('AttributeBinder.handleAttribute false without prefix', () => {
   ), 'Expected handleAttribute to return false without prefix');
 });
 
-run('AttributeBinder.handleAttribute true with prefix', () => {
+run('AttributeBinder.handleAttribute true with prefix', assert => {
   const extension = new AttributeBinder();
   assert.truthy(extension.handleAttribute(
     new Binder(),
@@ -32,7 +32,7 @@ run('AttributeBinder.handleAttribute true with prefix', () => {
   ), 'Expected handleAttribute to return true with prefix');
 });
 
-run('AttributeBinder.handleAttribute removes attribute with no data', () => {
+run('AttributeBinder.handleAttribute removes attribute with no data', assert => {
   const extension = new AttributeBinder();
   const element = document.createElement('div');
   const attribute = AttributeBinder.PREFIX + 'test';
@@ -47,7 +47,7 @@ run('AttributeBinder.handleAttribute removes attribute with no data', () => {
   assert.falsey(element.hasAttribute('test'), 'Expected attribute to be removed');
 });
 
-run('AttributeBinder.handleAttribute sets attribute with data', () => {
+run('AttributeBinder.handleAttribute sets attribute with data', assert => {
   const extension = new AttributeBinder();
   const element = document.createElement('div');
   const attribute = AttributeBinder.PREFIX + 'test';
