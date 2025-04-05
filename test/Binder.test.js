@@ -27,32 +27,35 @@ run('Binder.Extension.handleAttribute default false', assert => {
   assert.falsey(extension.handleAttribute(null, null, null, null, null), 'Extension.handleAttribute should default to false');
 });
 
-run('Binder.bind succeeds with no extensions or parameters', assert => {
+run('Binder.bind succeeds with no parameters', assert => {
   const binder = new Binder();
   assert.succeeds(() => binder.bind(), 'Expected bind() to not throw');
 });
 
-run('Binder.bind succeeds with no extensions or data', assert => {
+run('Binder.bind succeeds with no data', assert => {
   const binder = new Binder();
   const view = document.createElement('div');
   assert.succeeds(() => binder.bind(view), 'Expected bind() to not throw');
 });
 
-run('Binder binds property with no extensions', assert => {
+run('Binder sets property with value', assert => {
   const binder = new Binder();
   const view = document.createElement('div');
   view.setAttribute(Binder.PREFIX + 'test', 'value');
-  binder.bind(view);
-  assert.nothing(view.test, 'Expected view.test to be null when no data is bound');
   binder.bind(view, {value: 123});
   assert.equal(view.test, 123, 'Expected view.test to be 123');
-  binder.bind(view);
-  assert.nothing(view.test, 'Expected view.test to be nothing again when no data is bound');
-  binder.bind(view, {notvalue: 456});
-  assert.nothing(view.test, 'Expected view.test to be nothing again when no property matches');
 });
 
-run('Binder binds nested property with no extensions', assert => {
+run('Binder unsets property with missing value', assert => {
+  const binder = new Binder();
+  const view = document.createElement('div');
+  view.setAttribute(Binder.PREFIX + 'test', 'value');
+  view.test = 123
+  binder.bind(view, {missing: 123});
+  assert.nothing(view.test, 'Expected view.test to be nothing');
+});
+
+run('Binder sets nested property with value', assert => {
   const binder = new Binder();
   const view = document.createElement('div');
   view.setAttribute(Binder.PREFIX + 'test-test', 'value');
@@ -61,7 +64,16 @@ run('Binder binds nested property with no extensions', assert => {
   assert.equal(view.test.test, 123, 'Expected view.test.test to be 123');
 });
 
-run('Binder.bind reads nested property with no extensions', assert => {
+run('Binder unsets nested property with missing value', assert => {
+  const binder = new Binder();
+  const view = document.createElement('div');
+  view.setAttribute(Binder.PREFIX + 'test-test', 'value');
+  view.test = { test: 123 }; 
+  binder.bind(view, {missing: 123}); 
+  assert.nothing(view.test.test, 'Expected view.test.test to be nothing after unbinding missing value');
+});
+
+run('Binder sets property with nested value', assert => {
   const binder = new Binder();
   const view = document.createElement('div');
   view.setAttribute(Binder.PREFIX + 'test', 'value.value');
@@ -69,7 +81,16 @@ run('Binder.bind reads nested property with no extensions', assert => {
   assert.equal(view.test, 123, 'Expected view.test to be 123');
 });
 
-run('Binder binds descendants with no extensions', assert => {
+run('Binder unsets property with missing nested value', assert => {
+  const binder = new Binder();
+  const view = document.createElement('div');
+  view.setAttribute(Binder.PREFIX + 'test', 'value.value');
+  view.test = 'asdf'; 
+  binder.bind(view, {value: {}}); 
+  assert.nothing(view.test, 'Expected view.test to be nothing after unbinding missing nested value');
+});
+
+run('Binder binds descendants', assert => {
   const binder = new Binder();
   const parent = document.createElement('div');
   const child = parent.appendChild(document.createElement('div'));
@@ -92,52 +113,60 @@ run('Binder binds with dummy extension', assert => {
 run('Binder triggers attribute extension', assert => {
   const element = document.createElement('div');
   element.setAttribute(Binder.PREFIX + 'test', 'value');
+  var args = {};
+  const binder = new Binder(new class extends Binder.Extension {
+    handleAttribute(binder, view, data, name, value) { 
+      args = { binder, view, data, name, value };
+      return true; 
+    } 
+  }());
+  binder.bind(element, {value: 123});
+  assert.equal(args.binder, binder, 'Expected binder to be the same instance');
+  assert.equal(args.view, element, 'Expected view to be the element');
+  assert.truthy(args.data instanceof Route, 'Expected data to be a route');
+  assert.equal(args.name, 'test', 'Expected name to be test');
+  assert.equal(args.value, 'value', 'Expected value to be value');
+});
+
+run('Binder respects attribute extension return value', assert => {
+  const element = document.createElement('div');
+  element.setAttribute(Binder.PREFIX + 'test', 'value');
   element.setAttribute(Binder.PREFIX + 'test2', 'value');
   const binder = new Binder(new class extends Binder.Extension {
-    handleAttribute(binder, view, data, name, value) {
-      if (name !== 'test') { return false; }
-      assert.truthy(binder instanceof Binder, 'Expected binder to be a binder');
-      assert.equal(view, element, 'Expected view to be the element');
-      assert.truthy(data instanceof Route, 'Expected data to be a route');
-      assert.equal(value, 'value', 'Expected value to be value');
+    handleAttribute(binder, view, data, name, value) { 
+      return name === 'test'; 
+    } 
+  }());
+  binder.bind(element, {value: 123});
+  assert.equal(element.test2, 123, 'Expected element.test to be 123');
+  assert.nothing(element.test, 'Expected element.test2 to remain unchanged');
+});
+
+run('Binder triggers element extension', assert => {
+  const element = document.createElement('div');
+  var args = {};
+  const binder = new Binder(new class extends Binder.Extension {
+    handleElement(binder, view, data) {
+      args = { binder, view, data };
       return true;
     }
   }());
   binder.bind(element, {value: 123});
-  assert.nothing(element.test, 'Expected extension to handle test attribute');
-  assert.equal(element.test2, 123, 'Expected extension to not handle test2 attribute');
-  const binder2 = new Binder(new class extends Binder.Extension {
-    handleAttribute(binder, view, data, name, value) {
-      return false;
-    }
-  }());
-  binder2.bind(element, {value: 123});
-  assert.equal(element.test, 123, 'Expected extension2 to not handle test attribute');
+  assert.equal(args.binder, binder, 'Expected binder to be the same instance');
+  assert.equal(args.view, element, 'Expected view to be the element');
+  assert.truthy(args.data instanceof Route, 'Expected data to be a Route instance');
 });
 
-run('Binder triggers element extension', assert => {
-  const parent = document.createElement('div');
-  parent.setAttribute(Binder.PREFIX + 'test', 'value');
-  const child = parent.appendChild(document.createElement('div'));
-  child.setAttribute(Binder.PREFIX + 'test', 'value');
+run('Binder respects element extension return value', assert => {
+  const element = document.createElement('div');
+  element.setAttribute(Binder.PREFIX + 'test', 'value');
   const binder = new Binder(new class extends Binder.Extension {
     handleElement(binder, view, data) {
-      assert.truthy(binder instanceof Binder, 'Expected binder to be a binder');
-      assert.equal(view, parent, 'Expected view to be the parent');
-      assert.truthy(data instanceof Route, 'Expected data to be a route');
-      return true;
+      return true; 
     }
   }());
-  assert.nothing(parent.test, 'Expected extension to block parent');
-  assert.nothing(child.test, 'Expected extension to block child');
-  const binder2 = new Binder(new class extends Binder.Extension {
-    handleElement(binder, view, data) {
-      return false;
-    }
-  }());
-  binder2.bind(parent, {value: 123});
-  assert.equal(parent.test, 123, 'Expected extension2 to not block parent');
-  assert.equal(child.test, 123, 'Expected extension2 to not block child');
+  binder.bind(element, {value: 123});
+  assert.nothing(element.test, 'Expected element to be unprocessed');
 });
 
 run('Defer postpones', async assert => {

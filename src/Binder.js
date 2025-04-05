@@ -81,23 +81,23 @@ export default class Binder {
   bind(view, data) {
     this.#active++;
     data = data instanceof Route ? data : new Route(data);
-    const handled = this.#extensions.find(e => e.handleElement(this, view, data)) || !(view instanceof Element);
-    if (handled) { 
-      this.#active--;
-      return view; 
-    }
-    for (var attr of [...view.attributes]) {
-      var name = attr.name.toLowerCase();
-      if (!attr.name.startsWith(Binder.PREFIX)) { continue; }
-      name = name.substring(Binder.PREFIX.length);
-      if (this.#extensions.find(e => e.handleAttribute(this, view, data, name, attr.value))) { continue; }
-      var selection = data.select(attr.value?.split('.')).value;
-      var assignment = Route.select(view, name.split('-'));
-      assignment.assign(selection);
-    }
-    const scope = view.hasAttribute(Binder.ATTRIBUTE) ? data.select(view.getAttribute(Binder.ATTRIBUTE)?.split('.')) : data;
-    for (var child of [...view.childNodes]) {
-      this.bind(child, scope);
+    const handled = this.#extensions.find(e => e.handleElement(this, view, data));
+    if (!handled) {
+      if (view instanceof Element) {
+        for (var attr of [...view.attributes]) {
+          var name = attr.name.toLowerCase();
+          if (!attr.name.startsWith(Binder.PREFIX)) { continue; }
+          name = name.substring(Binder.PREFIX.length);
+          if (this.#extensions.find(e => e.handleAttribute(this, view, data, name, attr.value))) { continue; }
+          var selection = data.select(attr.value?.split('.')).value;
+          var assignment = Route.select(view, name.split('-'));
+          assignment.assign(selection);
+        }
+      }
+      if (view instanceof Node) {
+        const scope = view.hasAttribute(Binder.ATTRIBUTE) ? data.select(view.getAttribute(Binder.ATTRIBUTE)?.split('.')) : data;
+        for (var child of [...view.childNodes]) { this.bind(child, scope); }
+      }
     }
     this.#active--;
     return view;
