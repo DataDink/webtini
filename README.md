@@ -118,7 +118,7 @@
 
 Includes all standard modules
 
-[download](https://datadink.github.io/webtini/standard-binder.zip)
+[download](https://datadink.github.io/webtini/packages/standard-binder.zip)
 
 **Common JS**
 
@@ -149,7 +149,7 @@ const binder = new StandardBinder();
 
 Provides basic model binding, content generation & interactivity
 
-[download](https://datadink.github.io/webtini/minimal-binder.zip)
+[download](https://datadink.github.io/webtini/packages/minimal-binder.zip)
 
 **Common JS**
 
