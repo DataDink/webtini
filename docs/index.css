@@ -60,6 +60,10 @@ ul {
   min-width: max-content;
 }
 
+ul > ul {
+  padding-left: 1em;
+}
+
 .button {
   background-image: none;
   background: color-mix(in srgb, var(--accent), var(--background) 50%);
@@ -77,4 +81,9 @@ ul {
 
 .button:hover {
   background: color-mix(in srgb, var(--accent), var(--background) 75%);
+}
+
+hr {
+  min-width: 100%;
+  border-color: var(--foreground);
 }
