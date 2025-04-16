@@ -1,5 +1,5 @@
 // GOOD GRIEF! Someone has to have a better solution for testing browser-based modules without transpiling
-// TODO: Find an alternative method for <script type="module"> testing
+// TODO: Investigate Puppeteer & Playwrite
 
 import FS from 'fs';
 import PATH from 'path';
@@ -7,8 +7,10 @@ import HTTP from 'http';
 import {exec} from 'child_process';
 
 const testPath = './test';
-const outputPath = './test/test-results.html';
+const outputPath = process.argv[2];
 const testPort = 8765;
+
+if (!outputPath) { throw new Error("Output path not specified"); }
 
 const template = FS.readFileSync(PATH.resolve(testPath, 'test.html'), 'utf8');
 const testFiles = FS.readdirSync(testPath)

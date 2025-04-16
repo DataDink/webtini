@@ -103,3 +103,15 @@ run('TextBinder.handleElement updates Text node with bindings', assert => {
   binder.handleElement(new Binder(), element, route);
   assert.equal(element.textContent, 'Hello Alice, welcome to Wonderland!', 'Expected text content to be updated correctly');
 });
+
+run('TextBinder does not bind text in a style element', assert => {
+  const text = 'Hello {name}, welcome to {place}!';
+  const binder = new TextBinder();
+  const model = { name: 'Alice', place: 'Wonderland' };
+  const element = document.createTextNode(text);
+  const styleElement = document.createElement('style');
+  styleElement.appendChild(element);
+  const route = new Route(model);
+  binder.handleElement(new Binder(), element, route);
+  assert.equal(element.textContent, text, 'Expected text content to remain unchanged in a style element');
+});

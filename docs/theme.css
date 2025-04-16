@@ -1,0 +1,19 @@
+:root {
+  --scale: 3;
+  --background: #F0F0F0;
+  --background-contrast: #204000;
+  --foreground: #204000;
+  --foreground-contrast: #F0F0F0;
+  --accent: #80C020;
+  --font: 'Verdana';
+}
+
+html, body {
+  font-size: calc(var(--scale) * 1vmin);
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font);
+  font-weight: normal;
+}
+
+header, footer { box-shadow: 0 0 1rem 0 #000000; }

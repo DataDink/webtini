@@ -10,7 +10,7 @@ import StyleBinder from '../src/StyleBinder.js';
 import ClassBinder from '../src/ClassBinder.js';
 import AttributeBinder from '../src/AttributeBinder.js';
 
-export default 
+export 
 /**
  * @class StandardBinder
  * @description A standard binder with all the default extensions.
@@ -27,5 +27,5 @@ class StandardBinder extends Binder {
       new AttributeBinder()
     );
   }
-  static Extension = Binder.Extension;
 }
+export const Extension = Binder.Extension;

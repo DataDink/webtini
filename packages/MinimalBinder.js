@@ -6,7 +6,7 @@ import Binder from '../src/Binder.js';
 import TemplateBinder from '../src/TemplateBinder.js';
 import EventBinder from '../src/EventBinder.js';
 
-export default 
+export
 /**
  * @class MinimalBinder
  * @description A minimal binder with only the basic extensions needed for content generation and interactivity.
@@ -19,5 +19,5 @@ class MinimalBinder extends Binder {
       new EventBinder(),
     );
   }
-  static Extension = Binder.Extension;
 }
+export const Extension = Binder.Extension;

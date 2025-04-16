@@ -30,6 +30,7 @@ class TextBinder extends Binder.Extension {
   static #parse = Symbol('parse');
   handleElement(binder, element, route) {
     if (!(element instanceof Text)) { return false; }
+    if (element.parentElement instanceof HTMLStyleElement) { return false; }
     const parse = element[TextBinder.#parse] ??= TextBinder.parse(element.textContent);
     if (!parse.length) { return true; }
     const format = parse

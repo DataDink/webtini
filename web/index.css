@@ -1,0 +1,80 @@
+.loading { opacity: 0; }
+h1, h2, h3, h4, h5, h6 { 
+  font-weight: 700; 
+  margin: 0;
+  padding: .25em 0;
+  border: none;
+  border-bottom: .1rem solid var(--foreground);
+  text-align: center;
+}
+h1 { font-size: 2.25em; }
+h2 { font-size: 2em; }
+h3 { font-size: 1.75em; }
+h4 { font-size: 1.5em; }
+h5 { font-size: 1.25em; }
+h6 { font-size: 1em; }
+small { 
+  display: block;
+  font-size: 0.5em; 
+  font-style: italic;
+}
+
+header, footer {
+  background: var(--background-contrast);
+  color: var(--foreground-contrast);
+  padding: 0 1em;
+}
+
+nav a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1em;
+  margin: 0;
+  color: inherit;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+nav a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+code, blockquote {
+  border-radius: 0.5rem;
+  border: .1rem solid var(--highlight);
+  background: var(--background-contrast);
+  color: var(--foreground-contrast);
+  padding: 0.5em 1em;
+  margin: 0.5em 1em;
+  box-shadow: .3rem .3rem .3rem rgba(0,0,0,0.5);
+}
+
+article {
+  align-items: center;
+}
+
+ul {
+  flex: 0;
+  padding: 0;
+  min-width: max-content;
+}
+
+.button {
+  background-image: none;
+  background: color-mix(in srgb, var(--accent), var(--background) 50%);
+  color: var(--foreground);
+  font-size: 2em;
+  padding: 0.5em 1em;
+  border: .2rem solid var(--accent);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background 0.3s;
+  text-decoration: none;
+  box-shadow: inset .25rem .25rem .25rem 0px rgba(0, 0, 0, 0.25), 
+              inset -.25rem -.25rem .25rem 0px rgba(0, 0, 0, 0.25);
+}
+
+.button:hover {
+  background: color-mix(in srgb, var(--accent), var(--background) 75%);
+}

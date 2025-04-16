@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>webtini: Source: Binder.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <style>
+      blockquote { 
+        background-color: rgba(0,128,0,1); 
+        padding: 0.1em 1em; 
+        margin: 0 0 1em 0;
+        color: white; 
+      }
+      blockquote p {
+        margin: 0.25em 0;
+      }
+    </style>
+</head>
+
+<body>
+
+<div id="main">
+    <h2 class="page-title" style="background: rgba(0,0,0,0.1); padding: 0 1em;">Source: Binder.js</h2>
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @author Greenwald
+ * @license PDL
+ * @module Binder
+ */
+import Route from './Route.js';
+
+export default class Binder {
+  /**
+   * @property ATTRIBUTE
+   * @memberof module:Binder.Binder
+   * @description The attribute for defining the data scope for descendant elements.
+   * @type {string}
+   */
+  static get ATTRIBUTE() { return 'bind'; }
+  /**
+   * @property PREFIX
+   * @memberof module:Binder.Binder
+   * @description The prefix for identifying binding attributes.
+   * @type {string}
+   */
+  static get PREFIX() { return 'bind-'; }
+
+  #active = 0;
+  /**
+   * @property active
+   * @memberof module:Binder.Binder
+   * @description Indicates whether the binder is currently processing a view.
+   * @type {boolean}
+   */
+  get active() { return this.#active > 0; }
+
+  #extensions = [];
+  /**
+   * @class Binder
+   * @memberof module:Binder
+   * @description The core of webtini functionality. Renders a view using a data model.
+   * @param  {...Binder.Extension} extensions Loads the Binder instance with Binder.Extensions.
+   * @example
+   * ```html
+   * &lt;html>
+   *  &lt;body>
+   *    &lt;h1 bind-textcontent="title">&lt;/h1>
+   *    &lt;p bind-textcontent="content">&lt;/p>
+   *  &lt;/body>
+   * &lt;/html>
+   * ```
+   * 
+   * ```javascript
+   * var datamodel = {
+   *  title: 'The Page Title',
+   *  content: 'The page content',
+   * };
+   * var binder = new Binder();
+   * binder.bind(document.body, data)
+   * ```
+   * @example
+   * ```javascript
+   * import {TemplateBinder} from './TemplateBinder.js';
+   * import {EventBinder} from './EventBinder.js';
+   * import {StyleBinder} from './StyleBinder.js';
+   * import {ClassBinder} from './ClassBinder.js';
+   * var binder = new Binder(
+   *  new TemplateBinder(), 
+   *  new EventBinder(), 
+   *  new StyleBinder(), 
+   *  new ClassBinder()
+   * );
+   * ```
+   */
+  constructor(...extensions) { this.#extensions = extensions ?? []; }
+
+  /**
+   * @function bind
+   * @memberof module:Binder.Binder
+   * @description Renders the view using the data.
+   * @param {Element} view The root element to bind.
+   * @param {*} data The Route or data model to bind from.
+   * @returns {Element}
+   */
+  bind(view, data) {
+    this.#active++;
+    data = data instanceof Route ? data : new Route(data);
+    const handled = this.#extensions.find(e => e.handleElement(this, view, data));
+    if (!handled) {
+      if (view instanceof Element) {
+        for (var attr of [...view.attributes]) {
+          var name = attr.name.toLowerCase();
+          if (!attr.name.startsWith(Binder.PREFIX)) { continue; }
+          name = name.substring(Binder.PREFIX.length);
+          if (this.#extensions.find(e => e.handleAttribute(this, view, data, name, attr.value))) { continue; }
+          var selection = data.select(attr.value?.split('.')).value;
+          var assignment = Route.select(view, name.split('-'));
+          assignment.assign(selection);
+        }
+      }
+      if (view instanceof Node) {
+        const scope = view instanceof Element &amp;&amp; view.hasAttribute(Binder.ATTRIBUTE) ? data.select(view.getAttribute(Binder.ATTRIBUTE)?.split('.')) : data;
+        for (var child of [...view.childNodes]) { this.bind(child, scope); }
+      }
+    }
+    this.#active--;
+    return view;
+  }
+  #defer = setTimeout(() => {});
+  /**
+   * @function defer
+   * @memberof module:Binder.Binder
+   * @description Queues binding to occur after the current call stack is clear. Only the latest call to this function will execute.
+   * @param {Element} view The root element to bind.
+   * @param {*} data The Route or data model to bind from.
+   */
+  defer(view, data) {
+    clearTimeout(this.#defer);
+    this.#defer = setTimeout(() => this.bind(view, data));
+  }
+  static Extension = 
+  /**
+   * @class Extension
+   * @memberof module:Binder.Binder
+   * @description An interface for extending the functionality of the {@link Binder} class.
+   * @example
+   * ```javascript
+   * import {Binder} from './Binder.js';
+   * export default class MyExtension extends Binder.Extension {
+   *   handleElement(binder, element, route) {
+   *    if (!(element instanceof HTMLDivElement)) { return false; } // Only handle div elements
+   *    element.style.borderColor = 'red'; // Outline them in red
+   *    binder.bind(element, route); // Apply normal binding (optional)
+   *    return true; // Indicate that the element was handled and prevent further processing
+   *   }
+   * }
+   */
+  class Extension {
+    /**
+     * @function handleElement
+     * @memberof module:Binder.Binder.Extension
+     * @description A method for handling descendant elements.
+     * @param {Binder} binder The Binder instance that is currently processing the view.
+     * @param {Element} element The view element being processed.
+     * @param {Route} route The Route or data model being bound to the element.
+     * @returns {boolean} If true, prevents further processing of the element by the Binder.
+     */
+    handleElement(binder, element, route) { return false; }
+    /**
+     * @function handleAttribute
+     * @memberof module:Binder.Binder.Extension
+     * @description A method for handling an attribute on an element
+     * @param {Binder} binder The Binder instance that is currently processing the view.
+     * @param {Element} element The view element being processed.
+     * @param {Route} route The Route or data model being bound to the element.
+     * @param {string} name The name of the attribute being processed, minus the Binding.PREFIX.
+     * @param {string} value The value of the attribute being processed.
+     * @returns {boolean} If true, prevents further processing of the attribute by the Binder.
+     */
+    handleAttribute(binder, element, route, name, value) { return false; }
+  }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AttributeBinder.html">AttributeBinder</a></li><li><a href="module-Binder.html">Binder</a></li><li><a href="module-ClassBinder.html">ClassBinder</a></li><li><a href="module-EventBinder.html">EventBinder</a></li><li><a href="module-Route.html">Route</a></li><li><a href="module-StyleBinder.html">StyleBinder</a></li><li><a href="module-TemplateBinder.html">TemplateBinder</a></li><li><a href="module-TextBinder.html">TextBinder</a></li></ul><h3>Classes</h3><ul><li><a href="module-AttributeBinder.AttributeBinder.html">AttributeBinder</a></li><li><a href="module-Binder.Binder.html">Binder</a></li><li><a href="module-Binder.Binder.Extension.html">Extension</a></li><li><a href="module-ClassBinder.ClassBinder.html">ClassBinder</a></li><li><a href="module-EventBinder.EventBinder.html">EventBinder</a></li><li><a href="module-Route.Route.html">Route</a></li><li><a href="module-StyleBinder.StyleBinder.html">StyleBinder</a></li><li><a href="module-TemplateBinder.TemplateBinder.html">TemplateBinder</a></li><li><a href="module-TextBinder.TextBinder.html">TextBinder</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Apr 16 2025 07:23:10 GMT-0700 (Pacific Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
