@@ -36,6 +36,7 @@ header, footer {
   flex-direction: row;
   justify-content: space-between;
   align-items: stretch;
+  overflow: visible;
 }
 
 main, section, nav {

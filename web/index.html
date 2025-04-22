@@ -7,6 +7,57 @@
     <link rel="stylesheet" href="theme.css">
     <link rel="stylesheet" href="layout.css">
     <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="prism.css">
+    <script>
+      customElements.define(
+        'code-sample',
+        class extends HTMLElement {
+          #shadow = this.attachShadow({ mode: 'open' });
+          constructor() {
+            super();
+            this.#shadow.innerHTML = `
+              <style>
+                :host {
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: flex-start;
+                  align-items: center;
+                }
+              </style>
+              <slot name="source"></slot>
+              <slot name="output"></slot>
+              <slot name="format"></slot>
+            `;
+          }
+          connectedCallback() { setTimeout(() => {
+            const output = [...this.querySelectorAll('[slot="source"]')]
+              .filter(s => s instanceof HTMLTemplateElement)
+              .map(s => s.content.cloneNode(true))
+              .reduce((o, n) => (o.appendChild(n), o), document.createElement('div'));
+            output.slot = 'output';
+
+            const unformatted = [...output.childNodes].map(n => n.outerHTML ?? n.textContent).join('');
+            const trimmed = unformatted.replace(/^[\s\r\n]*\n|[\s\r\n]+$/g, '');
+            const indent = Math.min(...[...trimmed.matchAll(/^\s*/gm)].map(m => m[0].length));
+            const undented = trimmed.split('\n').map(l => l.slice(indent)).join('\n');
+            const format = this.appendChild(document.createElement('code'));
+            format.slot = 'format';
+            format.classList.add('language-html');
+            format.textContent = undented;
+            Prism.highlightElement(format);
+
+            const scripts = [...output.querySelectorAll('script')];
+            for (var script of scripts) {
+              script.remove();
+              new Function(script.innerHTML).call(output);
+            }
+            this.appendChild(output);
+          })}
+        }
+      );
+    </script>
+    <script src="prism.js"></script>
+    <script src="./packages/standard-binder-package.min.js"></script>
   </head>
   <body>
     <header>
@@ -35,6 +86,82 @@
           webtini is a minimalistic view modeling library for the web. It is designed to be simple and lightweight, allowing developers to create dynamic web applications without the overhead of larger frameworks.
         </blockquote>
         <a class="button" href="packages/standard-binder.zip" download="standard-binder.zip">Download Latest</a>
+        <hr />
+        <h1 id="quickstart">Quick Start</h1>
+        <p>
+          <h3>A Simple Clicker</h3>
+          <code-sample>
+            <template slot="source">
+              <button bind-event-click="increment">
+                Click Me {value}
+              </button>
+              <script>
+                const binder = new webtini.StandardBinder();
+                const view = this.querySelector('button');
+                const viewmodel = {
+                  value: 0,
+                  increment: function() { 
+                    this.value++;
+                    this.update();
+                  },
+                  update: function() { binder.bind(view, viewmodel); }
+                };
+                viewmodel.update();
+              </script>
+            </template>
+          </code-sample>
+        </p>
+        <p>
+          <h3>Content Templating</h3>
+          <code-sample>
+            <template slot="source">
+              <ul>
+                <template bind="items">
+                  <li>{name}</li>
+                </template>
+              </ul>
+              <script>
+                const binder = new webtini.StandardBinder();
+                const view = this.querySelector('ul');
+                const viewmodel = {
+                  items: [
+                    { name: 'Item 1' },
+                    { name: 'Item 2' },
+                    { name: 'Item 3' }
+                  ],
+                  update: function() { binder.bind(view, viewmodel); }
+                };
+                viewmodel.update();
+              </script>
+            </template>
+          </code-sample>
+        </p>
+        <p>
+          <h3>Input Handling</h3>
+          <code-sample>
+            <template slot="source">
+              <form>
+                <div>{content}</div>
+                <input type="text"
+                      bind-value="content"
+                      bind-event-input="textInput" />
+              </form>
+              <script>
+                const binder = new webtini.StandardBinder();
+                const view = this.querySelector('form');
+                const viewmodel = {
+                  content: 'Hello World',
+                  textInput: function(event) {
+                    this.content = event.target.value;
+                    this.update();
+                  },
+                  update: function() { binder.bind(view, viewmodel); }
+                };
+                viewmodel.update();
+              </script>
+            </template>
+          </code-sample>
+        </p>
         <hr />
         <h1 id="downloads">All Downloads</h1>
         <ul>
