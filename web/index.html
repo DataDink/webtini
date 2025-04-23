@@ -49,7 +49,7 @@
             const scripts = [...output.querySelectorAll('script')];
             for (var script of scripts) {
               script.remove();
-              new Function(script.innerHTML).call(output);
+              new Function('sample', script.innerHTML)(output);
             }
             this.appendChild(output);
           })}
@@ -97,7 +97,7 @@
               </button>
               <script>
                 const binder = new webtini.StandardBinder();
-                const view = this.querySelector('button');
+                const view = sample.querySelector('button');
                 const viewmodel = {
                   value: 0,
                   increment: function() { 
@@ -122,7 +122,7 @@
               </ul>
               <script>
                 const binder = new webtini.StandardBinder();
-                const view = this.querySelector('ul');
+                const view = sample.querySelector('ul');
                 const viewmodel = {
                   items: [
                     { name: 'Item 1' },
@@ -148,7 +148,7 @@
               </form>
               <script>
                 const binder = new webtini.StandardBinder();
-                const view = this.querySelector('form');
+                const view = sample.querySelector('form');
                 const viewmodel = {
                   content: 'Hello World',
                   textInput: function(event) {
